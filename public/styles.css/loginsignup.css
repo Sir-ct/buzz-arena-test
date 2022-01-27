@@ -1,0 +1,45 @@
+body.logsign{
+    background-color: rgb(243, 236, 236)
+}
+.lswrapper{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    background-color: rgba(255, 255, 255);
+    padding: 10% 0;
+}
+.lswrapper ion-icon{
+    font-size: 18px;
+}
+.lswrapper form{
+    width: 100%;
+    border-top: 1px solid rgb(216, 199, 199);
+    border-bottom: 1px solid rgb(216, 199, 199);
+    padding: 7% 0;
+}
+.lswrapper input{
+    border: none;
+    outline: none;
+}
+.lswrapper form div{
+    display: flex;
+    margin: 5px 0 10px 0;
+    width: 95%;
+    border: 1px solid rgb(216, 199, 199);
+    justify-content: space-between;
+    padding: 5px;
+}
+.lswrapper .submit{
+    border: none;
+}
+.lswrapper .submit input{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(255, 255, 255);
+}

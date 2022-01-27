@@ -1,0 +1,10 @@
+
+<div class="pageselector">
+    <div class="prev"> <ion-icon name="arrow-back-outline"></ion-icon> </div>
+    <ul class="selector">
+      <% for(let i=0; i<Math.ceil(totalposts/12); i++) {%>
+        <li><a href="/?page=<%=i+1%>"><%=i + 1%></a></li>
+        <%}%>
+    </li></ul>
+    <div class="next"> <ion-icon name="arrow-forward-outline"></ion-icon> </div>
+  </div>

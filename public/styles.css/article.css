@@ -1,0 +1,80 @@
+.article-wrapper{
+    width: 100%;
+}
+.img-article{
+    width: 50%;
+    height: 45vh;
+    margin: 5% auto;
+}
+.article-head-dets{
+    text-align: center;
+}
+.article-head-dets h1{
+    font-size: 35px;
+    text-transform: capitalize;
+}
+.article-page-det{
+    display: flex;
+    justify-content: center;
+}
+.article-page-det div{
+    margin: 0px 10px;
+    text-transform: capitalize;
+    margin-bottom: 100px;
+    color: rgb(146, 127, 127);
+}
+.article-page-body{
+    width: 50%;
+    font-size: 20px;
+    margin: auto;
+    line-height: 2;
+}
+.author input{
+    padding: 10px;
+}
+.commentsection{
+    background-color: rgb(212, 209, 209);
+}
+.comment-wrap{
+    padding: 10% 0;
+    width: 50%;
+    margin: auto;
+}
+.comment-wrap textarea{
+    min-width: 100%;
+    min-height: 200px;
+    font-size: 18px;
+    background-color: inherit;
+    border-left: none;
+    border-right: none;
+}
+.comment-wrap button{
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(0,0,0);
+    color: rgb(255,255,255);
+    border: none;
+    margin: 0px auto;
+}
+.icommentwrap{
+    margin: 4% 0;
+    border-bottom: 1px solid rgb(146, 127, 127);
+}
+.icommentuser{
+    text-transform: capitalize;
+    font-weight: 700;
+    margin: 10px 0;
+}
+.icomment{
+    padding: 3% 0;
+}
+.icommenttime{
+    font-size: 12px;
+}
+@media(max-width: 400px){
+    .img-article{
+        width: 60%;
+        height: 30vh;
+        margin: 5% auto;
+    }
+}

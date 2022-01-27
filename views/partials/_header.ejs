@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css/loginsignup.css">
+    <link rel="stylesheet" href="/styles.css/article.css">
+    <link rel="stylesheet" href="/styles.css/newArticle.css">
+    <link rel="stylesheet" href="/styles.css/main.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/Hood-logo.png">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <title>DA-HOOD</title>
+</head>
+<body>
+  
+    <header>
+    <div class="header">
+      <div class="mobilenav" id="mobilenav">
+        -
+        -
+      </div>
+        <div class="socialicons" data-aos="fade-right" data-aos-delay="500" data-aos-duration="1500">
+          <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+          <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+          <a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
+          <a href="#"><ion-icon src="./images/Hood-svg.svg"></ion-icon></a>
+        </div>
+        <div class="logodiv" data-aos="fade-left" data-aos-delay="500" data-aos-duration="1500">
+          _BUZZ-ARENA.
+        </div>
+        <div class="search" data-aos="fade-left" data-aos-delay="500" data-aos-duration="1500">
+          <input type="text" placeholder="SEARCH">
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
+        <div class="mobilesearch"></div>
+      </div>
+      <nav id="navbar">
+        <ul>
+          <li><a href="/">Home</a> </li>
+          <li>Categories
+            <ul class="cat-drop">
+              <a href="/categories/buzz"><li>Buzz</li></a>
+              <a href="/categories/sports"><li>Sports</li></a>
+              <a href="/categories/tech"><li>Tech</li></a>
+              <a href="/categories/fashion"><li>Fashion</li></a>
+            </ul>
+          </li>
+          <li><a href="/forum">Forum</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="">Contact</a></li>
+        </ul>
+
+        <div class="login-signup">
+          <% if(loggedIn){%>
+            <form action="/logout" method="post">
+              <button>logout</button>
+            </form>
+            <% if(user.isadmin){%>
+              <div><a href="/newArticle" class="panel-btn"> Panel </a></div>
+            <% } %>
+            <%if(user.isauthor && !user.isadmin){ %>
+              <div><a href="/newArticle" class="dashboard-btn">Dashboard</a></div>
+            <%}%>
+          <%} else {%>
+            <div><a href="/login" class="login-btn"> login</a></div>
+          <%}%>
+        </div>
+      </nav>
+      </header>

@@ -1,0 +1,81 @@
+<%- include("./partials/_header") %>
+
+<% if(msg){%>
+    <p><%= msg %></p>
+<%}%>
+        <section id="write-article">
+            <%- include("./partials/_articleForm") %>
+        </section>
+
+        <div class="admin-panel">
+            <h1>Control Panel</h1>
+            <div class="admin-panel-wrap">
+                <div class="allposts">
+                    <h2>All posts</h2>
+                    <div class="posts-cont">
+                        <% posts.forEach((post, index) =>{ %>
+    
+                            <div class="post">
+                                <div class="post-number"><%=index + 1%></div>
+                                <div class="post-det">
+                                    <h3><%= post.title %></h3>
+                                    <span> <%= post.author%></span>
+                                    <div class="admin-tamper">
+                                        <a href="/<%= post.id%>">read article</a> 
+                                        <a href=""> Edit article</a>
+                                        <form action="/<%= post.id%>?_method=DELETE" method="post">
+                                            <button>delete article</button>
+                                        </form>
+                                    </div>
+                                    <div class="status">
+                                        <p>status: <%=post.status%></p>
+                                        <form action="/maketrending/<%= post.id%>" method="post">
+                                            <button> make trending</button>
+                                        </form>
+                                        <form action="/removetrending/<%= post.id%>" method="post">
+                                            <button>remove from trending</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                       <% })%>
+                    </div>
+                </div>
+
+                <div class="allusers">
+                    <h2>All Users</h2>
+                    <div class="users-cont">
+                        <% users.forEach((user, index)=>{ %>
+                            <div class="user">
+                                <div class="user-number"><%= index + 1%></div>
+                                <div class="user-det">
+                                    <h3><%= user.fname %> <%= user.lname%></h3>
+                                    <div class="admin-tamper">
+                                        <a href="">view user</a>
+                                        <form action="/user/<%= user.id%>?_method=DELETE" method="post">
+                                            <button>delete user</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                       <% })%>
+                    </div>
+                </div>
+
+                <div class="createAuthor">
+                    <h2> Create Author</h2>
+                    <form action="/admin/makeauthor" method="post">
+                        <div>
+                            <input type="email" name="authormail" placeholder="author email">
+                        </div>
+                        <button>Make Author</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/mobilenav.js"></script>
+<%- include("./partials/_footer") %>
