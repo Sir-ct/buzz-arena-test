@@ -2,8 +2,9 @@
   "name": "Buzz-arena",
   "version": "1.0.0",
   "description": "A blog for the hood",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "nodemon server.js"
   },
   "keywords": [
