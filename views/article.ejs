@@ -1,6 +1,7 @@
 <%- include("./partials/_header") %>
 
 <div class="article-wrapper">
+ <% if(article){%>
   <div class="img-article">
     <img src="<%= article.bannerPath %>" alt="">
   </div>
@@ -16,7 +17,7 @@
       <%- article.sanitizedContent %>
       
     </div>
-
+ <%}%>
 </div>
 
 <section class="commentsection">
@@ -56,17 +57,19 @@
      <h2 class="popular-posts-header">Popular Posts</h2>
      <div class="popular-posts-cont">  
 
-       <% for(let i=0; i<6; i++){%>
+      <%if(){%>
+        <% for(let i=0; i<6; i++){%>
          
-        <div class="popular-posts">
-          <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
-          <div class="popular-post-content">
-            <a href="/<%= popular[i].id%>"><h3 class="pph"><%= popular[i].title %></h3></a>
-            <p class="ppd">By <%= popular[i].author %> on <%= popular[i].createdAt.toDateString()%></p>
+          <div class="popular-posts">
+            <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
+            <div class="popular-post-content">
+              <a href="/<%= popular[i].id%>"><h3 class="pph"><%= popular[i].title %></h3></a>
+              <p class="ppd">By <%= popular[i].author %> on <%= popular[i].createdAt.toDateString()%></p>
+            </div>
           </div>
-        </div>
-      
-      <% } %>
+        
+        <% } %>
+      <%{%>
 
      </div>
     </div>
