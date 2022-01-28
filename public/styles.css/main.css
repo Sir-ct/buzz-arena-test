@@ -436,6 +436,7 @@ footer button{
         width: 100%;
         height: 100vh;
         position: fixed;
+        border-top: 1px solid rgb(0, 0, 0);
         background-color: inherit;
         justify-content: center;
         flex-direction: column;
