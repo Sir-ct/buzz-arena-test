@@ -3,22 +3,24 @@
 
        <section class="hero">
         <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">  
+         <%if(trend){%>
           <% for(let i=0; i < 3; i++){%>
             
-              <div class="trending-posts">
-                <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
-                <div class="details">
-                  <div class="category">
-                      <%=trend[i].categories[0]%>  
-                </div>
-                  <a href="/<%= trend[i].id%>"><div class="detail-header">
-                    <%= trend[i].title%>
-                  </div></a>
-                  <div class="dets"><%= trend[i].author%> . <%= trend[i].createdAt.toDateString()%></div>
-                </div>
+            <div class="trending-posts">
+              <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
+              <div class="details">
+                <div class="category">
+                    <%=trend[i].categories[0]%>  
               </div>
-            
-         <% } %>
+                <a href="/<%= trend[i].id%>"><div class="detail-header">
+                  <%= trend[i].title%>
+                </div></a>
+                <div class="dets"><%= trend[i].author%> . <%= trend[i].createdAt.toDateString()%></div>
+              </div>
+            </div>
+          
+       <% } %>
+        <%}%>
         </div>
 
        </section>
@@ -26,6 +28,7 @@
        <section class="articles-section">
          <div class="articlescover">
 
+        <%if(article){%>
           <% articles.forEach( article =>{ %>
             <div class="articles" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1000">
               <div class="articleimg"><img src="<%= article.bannerPath %>" alt=""></div>
@@ -43,6 +46,7 @@
             </div>
 
           <% }) %>
+        <%}%>
          
          </div>
 
@@ -55,7 +59,8 @@
            <h2 class="popular-posts-header">Popular Posts</h2>
            <div class="popular-posts-cont">  
 
-             <% for(let i=0; i<6; i++){%>
+           <%if(){%>
+            <% for(let i=0; i<6; i++){%>
                
               <div class="popular-posts">
                 <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
@@ -66,6 +71,7 @@
               </div>
             
             <% } %>
+          <%}%>
  
            </div>
           </div>
