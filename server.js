@@ -141,9 +141,9 @@ try{
     console.log(article.views)
     console.log(comments)
     if(req.isAuthenticated()){
-    res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments})
+        res.render("article", {article: article, popular: popposts, loggedIn: true, user: req.user, comments: comments})
     }else{
-        res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments})
+        res.render("article", {article: article, popular: popposts, loggedIn: false, user: req.user, comments: comments})
     }
 
 } catch{
@@ -186,7 +186,6 @@ app.post("/register", async (req, res)=>{
     
                 user = await user.save()
                 
-                console.log(user)
                 res.redirect("/login")
             });
         });
@@ -315,7 +314,7 @@ app.post("/admin/makeauthor", async (req, res)=>{
          
     }
 } catch{
-    console.log(error)
+    res.redirect("/newArticle")
 }
 })
 
