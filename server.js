@@ -49,7 +49,7 @@ app.use(methodOverride("_method"))
 
 
 
-
+app.set("views", "./views")
 app.set('view engine', 'ejs')
 
 port = process.env.PORT || 5000
@@ -57,7 +57,7 @@ port = process.env.PORT || 5000
 
 
 // index route
-app.get("/*", async (req, res)=>{ 
+app.get("/", async (req, res)=>{ 
     let trending = await NewArticle.find({status: "trending"})
     let totalposts = await NewArticle.count()
     let postsperpage = 12
