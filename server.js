@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path")
 const fileupload = require("express-fileupload")
+const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const NewArticle = require("./models/articlesmodel");
 const Users = require("./models/usersmodel")
@@ -17,6 +18,7 @@ const {userAuthenticated, userIsAdmin} = require("./config/auth")
 
 
 initpassport(passport)
+dotenv.config()
 
 const app = express();
 
