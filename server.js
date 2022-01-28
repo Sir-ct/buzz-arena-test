@@ -266,7 +266,7 @@ else if(givenmail.isauthor == false){
         description: req.body.description,
         content: req.body.content,
         categories: req.body.category,
-        bannerPath: `/uploads/${banner}`,
+        bannerPath: `uploads/${banner}`,
         views: 0,
         author: `${givenmail.fname} ${givenmail.lname}`
     })
