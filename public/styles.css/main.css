@@ -459,8 +459,12 @@ footer button{
         padding: 30px 0;
         margin: 0;
     }
+    nav ul li{
+        position: relative;
+    }
     .cat-drop{
         position: relative;
+        height: auto;
     }
     .login-signup{
         width: 100%;
