@@ -112,7 +112,7 @@ li:hover ul{
 .login-register{
     display: flex;
     justify-content: space-between;
-    width: 10%;
+    width: 15%;
 }
 .login-btn{
     position: relative;
