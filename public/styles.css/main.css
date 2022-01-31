@@ -109,10 +109,12 @@ li:hover ul{
     right: 10%;
     bottom: 10%;
 }
-.login-btn{
-    width: 10%;
+.login-register{
     display: flex;
     justify-content: space-between;
+    width: 10%;
+}
+.login-btn{
     position: relative;
     font-weight: 700;
     padding: 5px;
