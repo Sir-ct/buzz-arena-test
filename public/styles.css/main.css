@@ -110,6 +110,7 @@ li:hover ul{
     bottom: 10%;
 }
 .login-btn{
+    width: 10%;
     display: flex;
     justify-content: space-between;
     position: relative;
