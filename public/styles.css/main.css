@@ -428,10 +428,12 @@ footer button{
         display: none;
     }
     .mobilenav{
+        width: 20%;
         position: relative;
         display: flex;
         cursor: pointer;
         z-index: 1000;
+        justify-content: space-between;
     }
     .mobilenav.show{
         left: 10%;
