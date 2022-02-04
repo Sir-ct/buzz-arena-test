@@ -122,6 +122,10 @@ li:hover ul{
     color: rgb(128, 128, 128);
     border-radius: 3px;
 }
+.welcome-text{
+    color: rgb(255, 255, 255);
+    text-transform: capitalize;
+}
 .category-page-head{
     text-align: center;
 }
@@ -474,14 +478,16 @@ footer button{
         height: auto;
     }
     .login-signup{
+        font-size: 10px;
+        position: fixed;
         width: 100%;
-      font-size: 10px;
-      bottom: 5%;
-      right: 50%;
-      transform: translateX(50%);
-      justify-content: space-around;
-      padding: 5px;
-    }
+        height: 10vh;
+        top: 10px;
+        right: 15%;
+        transform: translateX(50%);
+        justify-content: space-around;
+        padding: 5px;
+      }
     .login-btn{
         color: rgb(0, 0, 0);
         background-color: rgba(243, 236, 236, 0.5);

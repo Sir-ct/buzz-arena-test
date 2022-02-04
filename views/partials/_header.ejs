@@ -55,15 +55,27 @@
 
         <div class="login-signup">
           <% if(loggedIn){%>
-            <form action="/logout" method="post">
-              <button>logout</button>
-            </form>
-            <% if(user.isadmin){%>
-              <div><a href="/newArticle" class="panel-btn"> Panel </a></div>
-            <% } %>
-            <%if(user.isauthor && !user.isadmin){ %>
-              <div><a href="/newArticle" class="dashboard-btn">Dashboard</a></div>
-            <%}%>
+         
+            <div class="welcome-div">
+              <div class="welcome-text">Hi, <%= user.fname%></div>
+              <div class="welcome-menu">
+                <% if(user.isadmin == false && user.isauthor == false){%>
+                  <div class="dashboard-btn"><a href="/userdashboard">Profile</div>
+                  <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
+                <%}%>
+                <% if(user.isadmin){%>
+                  <div class="dashboard-btn"><a href="/newArticle"> Panel </a></div>
+                  <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
+                <% } %>
+                <%if(user.isauthor && !user.isadmin){ %>
+                  <div class="dashboard-btn"><a href="/authordashboard">Dashboard</a></div>
+                  <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
+                <%}%>
+                <form action="/logout" method="post">
+                  <button>logout</button>
+                </form>
+              </div>
+            </div>
           <%} else {%>
             <div class="login-register"><a href="/login" class="login-btn"> login</a> <a href="/register">Join Up</a></div>
           <%}%>
