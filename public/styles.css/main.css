@@ -130,6 +130,12 @@ li:hover ul{
     box-shadow: 2px 2px  2px rgb(0, 0, 0);
     z-index: 2000;
 }
+.welcome-menu{
+    display: none;
+}
+.welcome-menu.show{
+    display: block;
+}
 .dashboard-btn{
     border-bottom: 1px dashed rgb(146, 127, 127);
     padding: 5px 3px;
@@ -234,7 +240,7 @@ li:hover ul{
 }
 .articles h1{
     margin: 10px 0;
-    font-size: 30px;
+    font-size: 25px;
     text-transform: capitalize;
     font-family: 'Noto Serif', serif;
     color: rgb(0, 0, 0);
@@ -505,12 +511,6 @@ footer button{
     .login-btn{
         color: rgb(0, 0, 0);
         background-color: rgb(243, 236, 236);
-    }
-    .welcome-menu{
-        display: none;
-    }
-    .welcome-menu.show{
-        display: block;
     }
     .welcome-menu form button{
         background: none;
