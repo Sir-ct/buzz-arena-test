@@ -206,6 +206,17 @@ app.post("/login", (req, res, next)=>{
     })(req, res, next)
 
 })
+//author dashboard
+app.get("/authordashboard", (req,res)=>{
+    res.render("authordashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
+})
+
+//User dash board
+app.get("/userdashboard", async (req, res)=>{
+ 
+    res.render("userdashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
+   
+})
 //log out
 app.post("/logout", (req, res)=>{
     req.logout();
