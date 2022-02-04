@@ -52,13 +52,13 @@
           <li><a href="#about">About</a></li>
           <li><a href="">Contact</a></li>
         </ul>
-
+        
         <div class="login-signup">
           <% if(loggedIn){%>
          
             <div class="welcome-div">
-              <div class="welcome-text">Hi, <%= user.fname%></div>
-              <div class="welcome-menu">
+              <div class="welcome-text" id="welcome-txt">Hi, <%= user.fname%></div>
+              <div class="welcome-menu" id="welcome-mnu">
                 <% if(user.isadmin == false && user.isauthor == false){%>
                   <div class="dashboard-btn"><a href="/userdashboard">Profile</div>
                   <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
