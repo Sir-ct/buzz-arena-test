@@ -120,6 +120,11 @@ li:hover ul{
     color: rgb(128, 128, 128);
     border-radius: 3px;
 }
+.welcome-menu form button{
+    background: none;
+    border: none;
+    outline: none;
+}
 .welcome-text{
     color: rgb(255, 255, 255);
 }
@@ -511,11 +516,6 @@ footer button{
     .login-btn{
         color: rgb(0, 0, 0);
         background-color: rgb(243, 236, 236);
-    }
-    .welcome-menu form button{
-        background: none;
-        border: none;
-        outline: none;
     }
     .hero-cover{
         width: 90%;
