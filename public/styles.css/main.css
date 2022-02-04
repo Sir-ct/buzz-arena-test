@@ -450,7 +450,6 @@ footer button{
         position: fixed;
         background-color: inherit;
         justify-content: center;
-        flex-direction: column;
         top: 0;
         z-index: 100;  
         display: none;
@@ -488,11 +487,9 @@ footer button{
         justify-content: space-around;
         padding: 5px;
       }
-    .login-btn{
+      .login-btn{
         color: rgb(0, 0, 0);
-        background-color: rgba(243, 236, 236, 0.5);
-        border-top: rgb(255, 255, 255);
-        border-left: rgb(255, 255, 255);
+        background-color: rgb(243, 236, 236);
     }
     .panel-btn, .dashboard-btn{
         background-color: rgb(95, 72, 72);
