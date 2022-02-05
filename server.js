@@ -117,6 +117,17 @@ app.get("/login", (req, res)=>{
     res.render("login", {loggedIn: false, user: req.user})
     }
 })
+//author dashboard
+app.get("/authordashboard", (req,res)=>{
+    res.render("authordashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
+})
+
+//User dash board
+app.get("/userdashboard", async (req, res)=>{
+ 
+    res.render("userdashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
+   
+})
 
 //create article route
 app.get("/newArticle", userAuthenticated, userIsAdmin,  async (req, res)=>{
@@ -205,17 +216,6 @@ app.post("/login", (req, res, next)=>{
         failureFlash: true
     })(req, res, next)
 
-})
-//author dashboard
-app.get("/authordashboard", (req,res)=>{
-    res.render("authordashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
-})
-
-//User dash board
-app.get("/userdashboard", async (req, res)=>{
- 
-    res.render("userdashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
-   
 })
 //log out
 app.post("/logout", (req, res)=>{
