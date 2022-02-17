@@ -20,12 +20,12 @@ const {userAuthenticated, userIsAdmin} = require("./config/auth");
 const { getMaxListeners } = require("process");
 
 
+
 initpassport(passport)
-dotenv.config()
 
 const app = express();
 
-let mongoString = process.env.MONGODB_URI || "mongodb://localhost/buzz-arena-test"
+let mongoString = process.env.MONGODB_URI 
 mongoose.connect(mongoString) // hide this later
 
 
@@ -42,7 +42,7 @@ app.use(session({
     secure: true,
     maxAge:60000
        },
-    secret: process.env.SESSION_KEY, //hide this later
+    secret: SESSION_KEY, //hide this later
     resave: false,
     saveUninitialized: false
   }))
@@ -70,8 +70,8 @@ app.get("/", async (req, res)=>{
     let skipposts = postsperpage * (page - 1)
     let articles = await NewArticle.find().sort({createdAt: -1}).skip(skipposts).limit(postsperpage)
     let popposts = await NewArticle.find().sort({views: -1}).limit(6)
-
-if(req.isAuthenticated()){   
+    
+if(req.isAuthenticated()){
     res.render("index", {articles: articles, popular: popposts, loggedIn: true, user: req.user, totalposts: totalposts, currentpage: page, trend: trending})
  }else {
     
@@ -122,13 +122,14 @@ app.get("/login", (req, res)=>{
 })
 
 //User dash board
-app.get("/userdashboard", async (req, res)=>{
- 
+app.get("/userdashboard", userAuthenticated, async (req, res)=>{
+    let socials = await Usersocials.findOne({userId: req.user.id})
     res.render("userdashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
    
 })
 // updateUser profile route
 app.get("/updateprofile",userAuthenticated, (req, res)=>{
+
     res.render("updateprofile", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
 })
 
@@ -137,6 +138,7 @@ app.get("/updatesocials", userAuthenticated, async (req, res)=>{
     let socials = await Usersocials.findOne({userId: req.user.id})
     res.render("updatesocials", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, socials: socials})
 })
+
 // change password get route
 app.get("/changepassword", userAuthenticated, async(req, res)=>{
     res.render("changepassword", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, msg: ""})
@@ -156,7 +158,6 @@ app.get("/passwordreset/:token/:userid", (req, res)=>{
     }
 })
 
-
 //create article route
 app.get("/newArticle", userAuthenticated, userIsAdmin,  async (req, res)=>{
     let posts = await NewArticle.find()
@@ -171,7 +172,7 @@ app.get("/newArticle", userAuthenticated, userIsAdmin,  async (req, res)=>{
 //edit article route
 app.get("/updatearticle/:id", userIsAdmin, async (req, res)=>{
     let article = await NewArticle.findById(req.params.id)
-    res.render("updatearticle")
+    res.render("updatearticle", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, article: article, msg: ""})
 })
 
 // article page route
@@ -182,10 +183,12 @@ try{
     let comments = await Comments.find({postId: req.params.id})
     article.views += 1
     article.save()
+    console.log(article.views)
+    console.log(comments)
     if(req.isAuthenticated()){
-        res.render("article", {article: article, popular: popposts, loggedIn: true, user: req.user, comments: comments})
+    res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments})
     }else{
-        res.render("article", {article: article, popular: popposts, loggedIn: false, user: req.user, comments: comments})
+        res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments})
     }
 
 } catch{
@@ -241,16 +244,17 @@ app.post("/register", async (req, res)=>{
 
 //loging in users
 app.post("/login", passport.authenticate("local", {
-    failureRedirect: "/login", 
-    failureFlash: true
-}), async (req, res)=>{
-    let user = await Users.findById(req.user.id)
-    user.lastLoggedIn = Date.now()
+        failureRedirect: "/login", 
+        failureFlash: true
+    }), async (req, res)=>{
+        let user = await Users.findById(req.user.id)
+        user.lastLoggedIn = Date.now()
+        await user.save()
 
-    await user.save()
-    res.redirect("/")
-}
+        res.redirect("/")
+    }
 )
+
 
 //log out
 app.post("/logout", (req, res)=>{
@@ -362,7 +366,7 @@ app.post("/admin/makeauthor", async (req, res)=>{
          
     }
 } catch{
-    res.redirect("/newArticle")
+    console.log(error)
 }
 })
 
@@ -375,6 +379,7 @@ app.post("/maketrending/:id", async (req, res)=>{
 
     res.redirect("/newArticle")
 })
+
 //remove trending post
 app.post("/removetrending/:id", async (req,res)=>{
     let trending = await NewArticle.findById(req.params.id)
@@ -405,6 +410,8 @@ app.post("/comment/:id", userAuthenticated, async(req, res)=>{
         res.redirect(`/${req.params.id}`)
     
 })
+
+//**-------start updating main app from here ------ */
 
 // reset password post route
 app.post("/forgotpassword", async (req, res)=>{
@@ -639,6 +646,7 @@ app.post("/passwordreset/:token/:userid", async(req, res)=>{
         }
     }
 })
+
 
 //delete post
 app.delete("/:id", async (req,res)=>{
