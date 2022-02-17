@@ -42,7 +42,7 @@ app.use(session({
     secure: true,
     maxAge:60000
        },
-    secret: SESSION_KEY, //hide this later
+    secret: process.env.SESSION_KEY, //hide this later
     resave: false,
     saveUninitialized: false
   }))
