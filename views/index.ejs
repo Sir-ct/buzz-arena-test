@@ -4,7 +4,7 @@
        <section class="hero">
         <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">  
           <% if(trend){%>
-            <% for(let i=0; i < trend; i++){%>  
+            <% for(let i=0; i < trend.length; i++){%>  
             
               <div class="trending-posts">
                 <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
@@ -56,8 +56,8 @@
           <div class="popular-post-main-cont">
            <h2 class="popular-posts-header">Popular Posts</h2>
            <div class="popular-posts-cont">  
-
-             <% for(let i=0; i<6; i++){%>
+            <%if(popular){%>
+             <% for(let i=0; i< popular.length ; i++){%>
                
               <div class="popular-posts">
                 <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
@@ -66,7 +66,7 @@
                   <p class="ppd">By <%= popular[i].author %> on <%= popular[i].createdAt.toDateString()%></p>
                 </div>
               </div>
-            
+             <%}%>
             <% } %>
  
            </div>
