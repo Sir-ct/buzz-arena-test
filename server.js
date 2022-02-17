@@ -1,21 +1,24 @@
 const express = require("express");
 const path = require("path")
 const fileupload = require("express-fileupload")
-const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const NewArticle = require("./models/articlesmodel");
 const Users = require("./models/usersmodel")
 const Comments = require("./models/commentsmodel")
-const Usersocials = require("./models/usersocialsmodel")
+const Usersocials = require("./models/usersocialsmodel") //still
+const Token = require("./models/tokenmodel") //arill
 const bcrypt = require("bcryptjs")
+const crypto = require("crypto")
 const flash = require("express-flash")
 const initpassport = require("./config/passport-config");
 const passport = require("passport");
 const session = require("cookie-session")
+const nodemailer = require("nodemailer")
 const { error } = require("console");
 const methodOverride = require("method-override")
-const {userAuthenticated, userIsAdmin} = require("./config/auth")
-
+const {userAuthenticated, userIsAdmin} = require("./config/auth");
+const { getMaxListeners } = require("process");
+const usersocialsmodel = require("./models/usersocialsmodel");
 
 
 initpassport(passport)

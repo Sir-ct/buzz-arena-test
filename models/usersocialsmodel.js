@@ -11,7 +11,7 @@ const socialsSchema = new mongoose.Schema({
     twitter: {
         type: String
     },
-    Instagram: {
+    instagram: {
         type: String
     }
 })
