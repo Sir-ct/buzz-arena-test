@@ -3,9 +3,9 @@
 
        <section class="hero">
         <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">  
-          <% for(let i=0; i < 3; i++){%>
+          <% if(trend){%>
+            <% for(let i=0; i < trend; i++){%>  
             
-            <% if(trend != ""){%>
               <div class="trending-posts">
                 <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
                 <div class="details">

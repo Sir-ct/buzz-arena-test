@@ -63,7 +63,7 @@ port = process.env.PORT || 5000
 
 // index route
 app.get("/", async (req, res)=>{ 
-    let trending = await NewArticle.find({status: "trending"})
+    let trending = await NewArticle.find({status: "trending"}).limit(3)
     let totalposts = await NewArticle.count()
     let postsperpage = 12
     let page = req.query.page || 1
