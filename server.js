@@ -411,7 +411,7 @@ app.post("/comment/:id", userAuthenticated, async(req, res)=>{
     
 })
 
-//**-------start updating main app from here ------ */
+//
 
 // reset password post route
 app.post("/forgotpassword", async (req, res)=>{
@@ -613,37 +613,6 @@ app.post("/changepassword/:userid", async (req, res)=>{
         let message = emsg
         
     res.render("changepassword", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, msg: message})
-    }
-})
-
-//forgotpassword post route
-app.post("/passwordreset/:token/:userid", async(req, res)=>{
-    let token = await Token.findOne({token: req.params.token, userId: req.params.userid})
-    if(!token){
-        res.render("lastpasswordstep", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, token: req.params.token, userid: req.params.userid, msg: "link is invalid or has expired"})
-    }
-    else{
-        let  user = await Users.findById(req.params.userid)
-
-        if(req.body.newPassword != req.body.confirmPassword || req.body.newPassword == ""){
-            res.render("lastpasswordstep", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, token: req.params.token, userid: req.params.userid, msg: "the passwords don't match"})
-        }
-        else{
-            user.password = req.body.newPassword
-    
-            bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(user.password, salt, async function(err, hash) {
-                    user.password = hash
-        
-                    user = await user.save()
-                    
-                    console.log(user)
-                    await token.delete()
-                });
-            });
-
-            res.render("lastpasswordstep", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, token: req.params.token, userid: req.params.userid, msg: "password reset successful"})
-        }
     }
 })
 
