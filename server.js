@@ -18,7 +18,6 @@ const { error } = require("console");
 const methodOverride = require("method-override")
 const {userAuthenticated, userIsAdmin} = require("./config/auth");
 const { getMaxListeners } = require("process");
-const usersocialsmodel = require("./models/usersocialsmodel");
 
 
 initpassport(passport)
@@ -657,5 +656,32 @@ app.delete("/user/:id", async (req, res)=>{
 app.use((req, res)=>{
     res.redirect("/404")
 })
+
+async function sendmail(tomail, sbj, content){
+    let transport = nodemailer.createTransport({
+        host: "smtp.mailtrap.io",
+        port: 587,
+        secure: false,
+        auth: {
+          user: "c41069c65c7cb5",
+          pass: "7dadca14f63eca"
+        }
+      });
+
+    let message = {
+        from: "davidsirct@gmail.com",
+        to: tomail,
+        subject: sbj,
+        html: content
+    }
+
+    await transport.sendMail(message, (err, info)=>{
+        if(err){
+            console.log(err)
+        } else{
+            console.log(info)
+        }
+    })
+}
 
 app.listen(port)
