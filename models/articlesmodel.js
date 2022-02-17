@@ -37,6 +37,12 @@ let newArticleSchema = new mongoose.Schema({
     author: {
         type: String
     },
+    authorMail:{
+        type: String
+    },
+    authorId:{
+        Type: String
+    },
     status:{
         type: String
     },

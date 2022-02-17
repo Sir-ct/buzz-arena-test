@@ -1,0 +1,23 @@
+.dashboard{
+    margin: 0;
+    padding: 0;
+}
+.dashboard-cover{
+    width: 90%;
+    margin: auto;
+    display: flex;
+}
+.dashboard-img{
+    margin-right: 20px;
+}
+.online{
+    margin-right: 5px;
+}
+.last-login{
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 10px 0px;
+}
+.joined-and-email{
+    color: rgb(141, 134, 134);
+}

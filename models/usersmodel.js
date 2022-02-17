@@ -24,6 +24,23 @@ let userschema = new mongoose.Schema({
     isadmin:{
         type: Boolean,
         default: false
+    },
+    issuperadmin: {
+        type: Boolean,
+        default: false
+    },
+    timeJoined: {
+        type: Date,
+        default: Date.now
+    },
+    lastLoggedIn: {
+        type: Date
+    },
+    profileImgPath: {
+        type: String
+    },
+    aboutUser: {
+        type: String
     }
 })
 

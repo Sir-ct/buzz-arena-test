@@ -1,0 +1,86 @@
+.update-cover{
+    padding: 5% 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.update-settings{
+    width: 20%;
+    margin: 10px 20px;
+}
+.update-settings ul{
+    margin: 0;
+    padding: 0;
+}
+.update-settings ul li{
+    width: 90%;
+    list-style: none;
+    margin: 15px 0;
+    padding: 10px 10%;
+}
+.update-settings ul li:hover, .update-settings ul li:hover a{
+    background-color: rgb(15, 14, 14);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.update-settings ul li a{  
+    color: rgb(15, 14, 14);
+    font-weight: 700;
+}
+.img-upload-form label{
+    background-color: rgb(133, 135, 136);
+    padding: 10px 15px;
+}
+.update-form{
+    padding-top: 1%;
+    width: 70%;
+}
+.update-form div{
+    margin: 20px 0;
+}
+.update-form input{
+    width: 90%;
+    padding: 1%;
+    border: none;
+    background-color: rgb(186, 215, 224);
+}
+.about{
+    height: 10vh;
+}
+div.form-name{
+    margin: 5px 0;
+    text-transform: capitalize;
+}
+.update-form-image{
+    width: 30%;
+}
+.update-save-btn{
+    padding: 10px 15px;
+    background-color: rgb(15, 14, 14);
+    color: rgb(255, 255, 255);
+    border: none;
+}
+@media(max-width: 999px){
+    .update-cover{
+        padding: 5% 3%;
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        justify-content: space-around;
+        margin: auto;
+    }
+    .update-settings{
+        width: 80%;
+        margin: 10px auto;
+    }
+    .update-settings ul li{
+        width: 70%;
+        list-style: none;
+        margin: 15px auto;
+        padding: 10px 10%;
+    }
+    .update-form{
+        padding-top: 1%;
+        width: 100%;
+    }
+}

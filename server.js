@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const NewArticle = require("./models/articlesmodel");
 const Users = require("./models/usersmodel")
 const Comments = require("./models/commentsmodel")
+const Usersocials = require("./models/usersocialsmodel")
 const bcrypt = require("bcryptjs")
 const flash = require("express-flash")
 const initpassport = require("./config/passport-config");
@@ -39,7 +40,7 @@ app.use(session({
     secure: true,
     maxAge:60000
        },
-    secret: 'hide later', //hide this later
+    secret: process.env.SESSION_KEY, //hide this later
     resave: false,
     saveUninitialized: false
   }))
@@ -117,10 +118,6 @@ app.get("/login", (req, res)=>{
     res.render("login", {loggedIn: false, user: req.user})
     }
 })
-//author dashboard
-app.get("/authordashboard", (req,res)=>{
-    res.render("authordashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
-})
 
 //User dash board
 app.get("/userdashboard", async (req, res)=>{
@@ -128,6 +125,35 @@ app.get("/userdashboard", async (req, res)=>{
     res.render("userdashboard", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
    
 })
+// updateUser profile route
+app.get("/updateprofile",userAuthenticated, (req, res)=>{
+    res.render("updateprofile", {loggedIn: req.isAuthenticated() ? true : false, user: req.user})
+})
+
+// update user social handles get route
+app.get("/updatesocials", userAuthenticated, async (req, res)=>{
+    let socials = await Usersocials.findOne({userId: req.user.id})
+    res.render("updatesocials", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, socials: socials})
+})
+// change password get route
+app.get("/changepassword", userAuthenticated, async(req, res)=>{
+    res.render("changepassword", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, msg: ""})
+})
+
+//  forgot password get route
+app.get("/resetpassword", (req, res)=>{
+    res.render("resetpassword", {loggedIn: req.isAuthenticated() ? true : false, msg: ""})
+})
+
+//last password reset step
+app.get("/passwordreset/:token/:userid", (req, res)=>{
+    if(req.isAuthenticated()){
+        res.redirect("/")
+    } else {
+        res.render("lastpasswordstep", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, token: req.params.token, userid: req.params.userid, msg: ""})
+    }
+})
+
 
 //create article route
 app.get("/newArticle", userAuthenticated, userIsAdmin,  async (req, res)=>{
@@ -140,6 +166,11 @@ app.get("/newArticle", userAuthenticated, userIsAdmin,  async (req, res)=>{
         res.render("newArticle", {msg: "", article: new NewArticle(), posts: posts, users: users, loggedIn: false, user: req.user})
     }
 })
+//edit article route
+app.get("/updatearticle/:id", userIsAdmin, async (req, res)=>{
+    let article = await NewArticle.findById(req.params.id)
+    res.render("updatearticle")
+})
 
 // article page route
 app.get("/:id",  async (req, res)=>{
@@ -149,8 +180,6 @@ try{
     let comments = await Comments.find({postId: req.params.id})
     article.views += 1
     article.save()
-    console.log(article.views)
-    console.log(comments)
     if(req.isAuthenticated()){
         res.render("article", {article: article, popular: popposts, loggedIn: true, user: req.user, comments: comments})
     }else{
@@ -209,14 +238,18 @@ app.post("/register", async (req, res)=>{
 })
 
 //loging in users
-app.post("/login", (req, res, next)=>{
-    passport.authenticate("local", {
-        successRedirect: "/", 
-        failureRedirect: "/login", 
-        failureFlash: true
-    })(req, res, next)
+app.post("/login", passport.authenticate("local", {
+    failureRedirect: "/login", 
+    failureFlash: true
+}), async (req, res)=>{
+    let user = await Users.findById(req.user.id)
+    user.lastLoggedIn = Date.now()
 
-})
+    await user.save()
+    res.redirect("/")
+}
+)
+
 //log out
 app.post("/logout", (req, res)=>{
     req.logout();
@@ -276,9 +309,11 @@ else if(givenmail.isauthor == false){
         description: req.body.description,
         content: req.body.content,
         categories: req.body.category,
-        bannerPath: `uploads/${banner}`,
+        bannerPath: `/uploads/${banner}`,
         views: 0,
-        author: `${givenmail.fname} ${givenmail.lname}`
+        author: `${givenmail.fname} ${givenmail.lname}`,
+        authorMail: `${givenmail.mail}`,
+        authorId: `${givenmail.id}`
     })
 
 try{
@@ -367,6 +402,240 @@ app.post("/comment/:id", userAuthenticated, async(req, res)=>{
        
         res.redirect(`/${req.params.id}`)
     
+})
+
+// reset password post route
+app.post("/forgotpassword", async (req, res)=>{
+    let user = await Users.findOne({mail: req.body.email})
+
+    if(!user) {
+        res.render("resetpassword", {loggedIn: req.isAuthenticated() ? true : false, msg: "there is no user with this email"})
+    }
+    else{
+        let token = await Token.findOne({userId: user.id})
+
+        if(!token){
+            token = new Token({
+                userId: user.id,
+                token:  crypto.randomBytes(32).toString("hex")
+            })
+    
+            let resetlink = `<h1> click on the link below to reset your password</>
+            <a href="https://localhost:5000/passwordreset/${token.token}/${user.id}"> Reset password</a>`
+
+            sendmail(user.mail, "password reset link", resetlink)
+            res.render("resetpassword", {loggedIn: req.isAuthenticated() ? true : false, msg: "reset link has been sent to your email"})
+       
+        }
+    }
+})
+
+//user socials update
+app.post("/updatesocials/:userid", async(req, res)=>{
+    let usersocial = await Usersocials.findOne({userId: req.params.userid})
+  
+    if(usersocial){
+
+       if(req.body.facebook != ""){
+           usersocial.facebook = req.body.facebook
+
+           await usersocial.save()
+       }
+       if(req.body.twitter != ""){
+           usersocial.twitter = req.body.twitter
+
+           await usersocial.save()
+       }
+       if(req.body.instagram != ""){
+           usersocial.instagram = req.body.instagram
+
+           await usersocial.save()
+       }
+
+       res.redirect("/updatesocials")
+       
+    }
+    else {
+
+        usersocial = new Usersocials({
+            userId: req.params.userid,
+            facebook: req.body.facebook,
+            twitter:  req.body.twitter,
+            instagram: req.body.instagram,
+        })
+
+        await usersocial.save()
+        console.log(usersocial)
+        res.redirect("/updatesocials")
+        
+    }
+     
+})
+
+// user profile update
+app.post("/updateprofile/:userid", async (req, res)=>{
+    let user = await Users.findById(req.params.userid)
+    if(req.files != null){
+        let file = req.files.profilepic
+        let date = new Date()
+        let dp = date.getDate() + date.getTime() + file.name
+        let dpdir = path.join(staticpath,  `/uploads/${dp}`)
+        file.mv(dpdir, (err, results)=>{
+            console.log(results)
+        })
+
+        user.profileImgPath = `/uploads/${dp}`
+
+        user = await user.save()
+        console.log(dpdir)
+    }
+
+    user.fname = req.body.firstname
+    user.lname = req.body.lastname
+    user.aboutUser = req.body.about
+
+    await user.save()
+
+    res.redirect("/updateprofile")
+})
+
+// update article
+app.put("/newArticle/:articleid", async (req, res)=>{
+    try{
+        let article = await NewArticle.findById(req.params.articleid)
+    if(req.files != null){
+        let file = req.files.bannerimage
+        let date = new Date()
+        let banner = date.getDate() + date.getTime() + file.name
+        let bannerdir = path.join(staticpath,  `/uploads/${banner}`)
+        file.mv(bannerdir, (err, results)=>{
+            console.log(results)
+        })
+
+        article.bannerPath =  `/uploads/${banner}`
+
+        await article.save()
+    }
+
+    if(req.body.authormail != ""){
+        let givenmail = await Users.findOne({mail: req.body.authormail})
+        if(!givenmail){
+            articleEditError("This email is not Registered", req)
+        }
+        else if(givenmail.isauthor == false){
+            articleEditError("This User is not an author", req)
+        }
+                article.author =  `${givenmail.fname} ${givenmail.lname}`,
+                article.authorMail =  `${givenmail.mail}`,
+                article.authorId =  `${givenmail.id}`
+
+        await article.save()
+    }
+
+    if(req.body.category == ""){
+       articleEditError("select category", req)
+       
+    }
+    else{
+        article.categories = req.body.category
+
+        await article.save()
+    }
+
+    article.title = req.body.title
+    article.description = req.body.description
+    article.content = req.body.content
+
+    await article.save()
+
+    res.redirect("/updatearticle")
+    } catch{
+        articleEditError("enter missing credentials", req)
+    }
+
+    async function articleEditError(emsg, persist){
+        let message = emsg
+        let article = await NewArticle.findById(persist.params.articleid)
+    res.render("updatearticle", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, article: article, msg: message})
+    }
+})
+
+// change password post route
+app.post("/changepassword/:userid", async (req, res)=>{
+
+    let user = await Users.findById(req.params.userid)
+
+    if(req.body.oldPassword == ""){
+        changePassError("Please enter your previous password!")
+    }
+    else{
+        let isMatch = await bcrypt.compare(req.body.oldPassword, user.password)
+        if(!isMatch){
+            changePassError("Old password is incorrect")
+        }else{
+            if(req.body.newPassword != req.body.confirmPassword || req.body.newPassword == ""){
+                changePassError("The two passwords do not match")
+                console.log(req.body)
+            }
+            else{
+                console.log(req.body)
+                user.password = req.body.newPassword
+    
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(user.password, salt, async function(err, hash) {
+                        user.password = hash
+            
+                        user = await user.save()
+                        
+                        console.log(user)
+                        
+                    });
+                });
+                req.logout()
+                res.redirect("/login")
+            }
+            
+        }
+    
+        }
+        
+       
+    async function changePassError(emsg, persist){
+        let message = emsg
+        
+    res.render("changepassword", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, msg: message})
+    }
+})
+
+//forgotpassword post route
+app.post("/passwordreset/:token/:userid", async(req, res)=>{
+    let token = await Token.findOne({token: req.params.token, userId: req.params.userid})
+    if(!token){
+        res.render("lastpasswordstep", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, token: req.params.token, userid: req.params.userid, msg: "link is invalid or has expired"})
+    }
+    else{
+        let  user = await Users.findById(req.params.userid)
+
+        if(req.body.newPassword != req.body.confirmPassword || req.body.newPassword == ""){
+            res.render("lastpasswordstep", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, token: req.params.token, userid: req.params.userid, msg: "the passwords don't match"})
+        }
+        else{
+            user.password = req.body.newPassword
+    
+            bcrypt.genSalt(10, function(err, salt) {
+                bcrypt.hash(user.password, salt, async function(err, hash) {
+                    user.password = hash
+        
+                    user = await user.save()
+                    
+                    console.log(user)
+                    await token.delete()
+                });
+            });
+
+            res.render("lastpasswordstep", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, token: req.params.token, userid: req.params.userid, msg: "password reset successful"})
+        }
+    }
 })
 
 //delete post

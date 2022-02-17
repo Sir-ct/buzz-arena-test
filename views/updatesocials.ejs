@@ -1,0 +1,45 @@
+<%- include("./partials/_header", {loggedIn: loggedIn})%>
+
+<div class="update-section">
+    <div class="update-cover">
+        <div class="update-settings">
+            <h2>Settings</h2>
+            <ul>
+                <li><a href="/updateprofile">Update Profile</a></li>
+                <li><a href="/editsocialhandles">Social</a></li>
+                <li><a href="/changepassword">Change Password</a></li>
+            </ul>
+        </div>
+        <div class="update-form">
+          
+                <form action="/updatesocials/<%= user.id %>" method="post">
+                  
+                    <div>
+                        <div class="form-name">
+                            facebook URL
+                        </div>
+                        <input type="text" name="facebook" value='<%= socials.facebook %>' placeholder="enter facebook url">
+                    </div>
+
+                    <div>
+                        <div class="form-name">
+                            twitter URL
+                        </div>
+                        <input type="text" name="twitter" value='<%= socials.twitter %>' placeholder="enter twitter profile link">
+                    </div>
+
+                    <div>
+                        <div class="form-name">
+                            instagram URL
+                        </div>
+                        <input type="text" name="instagram" value="<%= socials.instagram %>" placeholder="enter instagram profile link">
+                    </div>
+                    
+                    <button type="submit" class="update-save-btn">Save</button>
+                </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/mobilenav.js"></script>
+<%- include("./partials/_footer")%>

@@ -43,3 +43,7 @@ body.logsign{
     background-color: rgba(0, 0, 0, 0.8);
     color: rgb(255, 255, 255);
 }
+.signup-form{
+    padding: 0px 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}

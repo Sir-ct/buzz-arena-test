@@ -1,8 +1,22 @@
 <%- include("./partials/_header", {loggedIn: loggedIn})%>
 
 <div class="dashboard">
-    
+    <div class="dashboard-cover">
+        <div class="dashboard-img">
+            <% if(user.profileImgPath){%>
+                <img src="<%= user.profileImgPath %>" alt="profile picture">
+                <%} else{%>
+                    <img src="/images/User.jpg" alt="profile picture">
+                <%}%>
+        </div>
+        <div class="dashboard-dets">
+            <h2 class="Username"><%= user.fname %> <%= user.lname%></h2>
+            <div class="last-login"><div class="online"></div>last login: <%= user.lastLoggedIn.toDateString()%>, <%= user.lastLoggedIn.toLocaleTimeString()%> </div>
+            <div class="userdescription"> <%= user.aboutUser %></div>
+            <div class="joined-and-email">Joined on <%= user.timeJoined.toDateString()%> | <%= user.mail%></div>
+        </div>
+    </div>
 </div>
 
-<script src="./js/mobilenav.js"></script>
+<script src="/js/mobilenav.js"></script>
 <%- include("./partials/_footer")%>

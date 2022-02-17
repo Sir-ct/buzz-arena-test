@@ -1,0 +1,62 @@
+<%- include("./partials/_header", {loggedIn: loggedIn})%>
+
+<div class="update-section">
+    <div class="update-cover">
+        <div class="update-settings">
+            <h2>Settings</h2>
+            <ul>
+                <li><a href="/updateprofile">Update Profile</a></li>
+                <li><a href="/updatesocials">Social</a></li>
+                <li><a href="/changepassword">Change Password</a></li>
+            </ul>
+        </div>
+        <div class="update-form">
+            <div class="update-form-image">
+              <% if(user.profileImgPath){%>
+                <img src="<%= user.profileImgPath %>" alt="profile picture">
+                <%} else{%>
+                    <img src="/images/User.jpg" alt="profile picture">
+                <%}%>
+            </div>
+                <form action="/updateprofile/<%= user.id%>" method="post" enctype="multipart/form-data">
+                   <div class="img-upload-form">
+                    <input type="file" name="profilepic" id="dp" accept="image/*" hidden>
+                    <label for="dp">Select Image</label>
+                   </div>
+
+                    <div>
+                        <div class="form-name">
+                            first name
+                        </div>
+                        <input type="text" name="firstname" value="<%= user.fname%>" placeholder="First name">
+                    </div>
+
+                    <div>
+                        <div class="form-name">
+                            last name
+                        </div>
+                        <input type="text" name="lastname" value="<%= user.lname%>" placeholder="Last name">
+                    </div>
+
+                    <div>
+                        <div class="form-name">
+                            email
+                        </div>
+                        <input type="email" name="email" value="<%= user.mail%>" placeholder="Email" style="pointer-events: none;">
+                    </div>
+
+                    <div>
+                        <div class="form-name">
+                            about me
+                        </div>
+                        <input type="text" name="about" value="<%= user.aboutUser%>" class="about" placeholder="Describe Yourself in less than five sentences">
+                    </div>
+                    
+                    <button type="submit" class="update-save-btn">Save</button>
+                </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/mobilenav.js"></script>
+<%- include("./partials/_footer")%>

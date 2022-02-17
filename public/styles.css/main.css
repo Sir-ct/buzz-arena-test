@@ -503,17 +503,20 @@ footer button{
         height: auto;
     }
     .login-signup{
-      font-size: 10px;
-      position: fixed;
-      width: 100%;
-      height: 10vh;
-      top: 10px;
-      right: 15%;
-      transform: translateX(50%);
-      justify-content: space-around;
-      padding: 5px;
+        font-size: 10px;
+        position: fixed;
+        width: 100%;
+        height: 7vh;
+        top: 10px;
+        right: 15%;
+        transform: translateX(50%);
+        justify-content: space-around;
+        padding: 5px;
     }
-    .login-btn{
+    .login-signup a{
+        color: rgb(255, 255, 255);
+    }
+    a.login-btn{
         color: rgb(0, 0, 0);
         background-color: rgb(243, 236, 236);
     }
