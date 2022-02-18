@@ -333,6 +333,7 @@ li:hover ul{
 }
 .about{
     width: 30%;
+    padding-bottom: 15%;
 }
 .about p{
     font-size: 18px;
