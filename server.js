@@ -526,6 +526,10 @@ app.put("/newArticle/:articleid", async (req, res)=>{
         await article.save()
     }
 
+    if(req.body.authormail == ""){
+        articleEditError("author field cannot be empty", req)
+    }
+
     if(req.body.authormail != ""){
         let givenmail = await Users.findOne({mail: req.body.authormail})
         if(!givenmail){
@@ -534,14 +538,17 @@ app.put("/newArticle/:articleid", async (req, res)=>{
         else if(givenmail.isauthor == false){
             articleEditError("This User is not an author", req)
         }
-                article.author =  `${givenmail.fname} ${givenmail.lname}`,
-                article.authorMail =  `${givenmail.mail}`,
-                article.authorId =  `${givenmail.id}`
+        else if(givenmail.isauthor){
+            article.author =  `${givenmail.fname} ${givenmail.lname}`,
+            article.authorMail =  `${givenmail.mail}`,
+            article.authorId =  `${givenmail.id}`
 
-        await article.save()
+                await article.save()
+        }
+                
     }
 
-    if(req.body.category == ""){
+    if(!req.body.category){
        articleEditError("select category", req)
        
     }
@@ -559,7 +566,7 @@ app.put("/newArticle/:articleid", async (req, res)=>{
 
     res.redirect("/updatearticle")
     } catch{
-        articleEditError("enter missing credentials", req)
+        console.log(error)
     }
 
     async function articleEditError(emsg, persist){
@@ -568,6 +575,7 @@ app.put("/newArticle/:articleid", async (req, res)=>{
     res.render("updatearticle", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, article: article, msg: message})
     }
 })
+
 
 // change password post route
 app.post("/changepassword/:userid", async (req, res)=>{

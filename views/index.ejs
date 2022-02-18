@@ -1,29 +1,26 @@
 <%- include("./partials/_header", {loggedIn: loggedIn, user: user}) %>
 
 
-       <section class="hero">
-        <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">  
-          <% if(trend){%>
-            <% for(let i=0; i < trend.length; i++){%>  
-            
-              <div class="trending-posts">
-                <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
-                <div class="details">
-                  <div class="category">
-                      <%=trend[i].categories[0]%>  
-                </div>
-                  <a href="/<%= trend[i].id%>"><div class="detail-header">
-                    <%= trend[i].title%>
-                  </div></a>
-                  <div class="dets"><%= trend[i].author%> . <%= trend[i].createdAt.toDateString()%></div>
-                </div>
+<% if(trend != ""){%>
+  <section class="hero">
+    <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">          
+      <% for(let i=0; i < trend.length; i++){%> 
+      <div class="trending-posts">
+            <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
+            <div class="details">
+              <div class="category">
+                <%=trend[i].categories[0]%>  
               </div>
-            <%}%>
-            
-         <% } %>
-        </div>
-
-       </section>
+              <a href="/<%= trend[i].id%>"><div class="detail-header">
+                <%= trend[i].title%>
+              </div></a>
+              <div class="dets"><%= trend[i].author%> . <%= trend[i].createdAt.toDateString()%></div>
+            </div>
+          </div>  
+          <%}%>      
+    </div>
+   </section>
+<%}%>
 
        <section class="articles-section">
          <div class="articlescover">

@@ -41,7 +41,7 @@ let newArticleSchema = new mongoose.Schema({
         type: String
     },
     authorId:{
-        Type: String
+        type: String
     },
     status:{
         type: String
