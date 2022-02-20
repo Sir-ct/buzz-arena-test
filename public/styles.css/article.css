@@ -57,8 +57,20 @@
     margin: 0px auto;
 }
 .icommentwrap{
+    display: flex;
     margin: 4% 0;
     border-bottom: 1px solid rgb(146, 127, 127);
+}
+.icommentdp{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.icommentdp img{
+    border-radius: 50%;
+    width: 100%;
+    display: block;
 }
 .icommentuser{
     text-transform: capitalize;

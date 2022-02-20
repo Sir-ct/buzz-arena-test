@@ -26,15 +26,24 @@
     <h1><%= comments.length%> comments</h1>
     <% for(let i=0; i<comments.length; i++){%> 
       <div class="icommentwrap">
-        <div class="icommentdets">
-          <div class="icommentuser"><%= comments[i].authorName%></div>
-          <div class="icommenttime"><%= comments[i].commentTime.toDateString()%> @ <%= comments[i].commentTime.toLocaleTimeString()%></div>
+        <div class = "icommentdp">
+          <% if(commentauthor[i].profileImgPath){%>
+            <img src="<%= commentauthor[i].profileImgPath %>" alt="profile picture">
+            <%} else{%>
+                <img src="/images/User.jpg" alt="profile picture">
+            <%}%>
         </div>
-        <div class="icomment">
-          <%= comments[i].comment %>
+        <div>
+          <div class="icommentdets">
+            <div class="icommentuser"><%= comments[i].authorName%></div>
+            <div class="icommenttime"><%= comments[i].commentTime.toDateString()%> @ <%= comments[i].commentTime.toLocaleTimeString()%></div>
+          </div>
+          <div class="icomment">
+            <%= comments[i].comment %>
+          </div>
         </div>
       </div>
-    <%}%>     
+    <%}%>    
    
     <%}%>
      
