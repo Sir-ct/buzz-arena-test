@@ -68,7 +68,7 @@
     border-radius: 50%;
 }
 .icommentdp img{
-    border-radius: 50%;
+    border-radius: 50%;/**/
     width: 100%;
     display: block;
 }
