@@ -230,8 +230,15 @@ app.post("/register", async (req, res)=>{
                 user.password = hash
     
                 user = await user.save()
-                
-                res.redirect("/login")
+
+                let regmail = `
+                    <h2>Welcome</h2>
+                    <p> You Are successfully registered on Buzz arena, go ahead and login with the link below<br>
+                        <a href="buzz-arena-test.herokuapp.com/login"> Login </a>
+                    </p>
+                `
+                sendmail(user.mail, "Welcome to the hood", regmail)
+                res.render("register", {loggedIn: false, user: req.user,errormsg: "congratulations! an email has been sent to your inbox" , feilds: ""})
             });
         });
     }
