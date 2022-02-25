@@ -682,17 +682,17 @@ app.use((req, res)=>{
 
 async function sendmail(tomail, sbj, content){
     let transport = nodemailer.createTransport({
-        host: "smtp.mailtrap.io",
+        host: "mail.buzzarena.net",
         port: 587,
         secure: false,
         auth: {
-          user: "c41069c65c7cb5",
-          pass: "7dadca14f63eca"
+          user: "test@buzzarena.net",
+          pass: process.env.MAIL_PASS
         }
       });
 
     let message = {
-        from: "davidsirct@gmail.com",
+        from: "test@buzzarena.net",
         to: tomail,
         subject: sbj,
         html: content
