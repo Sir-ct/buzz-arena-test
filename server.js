@@ -237,7 +237,7 @@ app.post("/register", async (req, res)=>{
                         <a href="buzz-arena-test.herokuapp.com/login"> Login </a>
                     </p>
                 `
-                sendmail(user.mail, "Welcome to the hood", regmail)
+                sendmail(req.body.email, "Welcome to the hood", regmail)
                 res.render("register", {loggedIn: false, user: req.user,errormsg: "congratulations! an email has been sent to your inbox" , feilds: ""})
             });
         });
@@ -684,15 +684,18 @@ async function sendmail(tomail, sbj, content){
     let transport = nodemailer.createTransport({
         host: "mail.buzzarena.net",
         port: 587,
-        secure: true,
+        secure: false,
         auth: {
           user: "test@buzzarena.net",
           pass: process.env.MAIL_PASS
+        },
+        tls: {
+            rejectUnauthorized: false
         }
       });
 
     let message = {
-        from: "test@buzzarena.net",
+        from: '"Buzz arena" <test@buzzarena.net>',
         to: tomail,
         subject: sbj,
         html: content
