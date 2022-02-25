@@ -682,20 +682,18 @@ app.use((req, res)=>{
 
 async function sendmail(tomail, sbj, content){
     let transport = nodemailer.createTransport({
-        host: "mail.buzzarena.net",
-        port: 587,
-        secure: false,
+        host: "secure308.inmotionhosting.com",
+        port: 465,
+        secure: true,
         auth: {
           user: "test@buzzarena.net",
           pass: process.env.MAIL_PASS
         },
-        tls: {
-            rejectUnauthorized: false
-        }
+        ignoreTLS: true,
       });
 
     let message = {
-        from: '"Buzz arena" <test@buzzarena.net>',
+        from: 'test@buzzarena.net',
         to: tomail,
         subject: sbj,
         html: content
