@@ -684,7 +684,7 @@ async function sendmail(tomail, sbj, content){
     let transport = nodemailer.createTransport({
         host: "mail.buzzarena.net",
         port: 587,
-        secure: false,
+        secure: true,
         auth: {
           user: "test@buzzarena.net",
           pass: process.env.MAIL_PASS
