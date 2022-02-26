@@ -30,7 +30,7 @@ mongoose.connect(mongoString) // hide this later
 
 
 
-const staticpath ="./public"
+const staticpath ="public"
 
 app.use(express.static(path.join(__dirname, staticpath)))
 app.use(express.json())
