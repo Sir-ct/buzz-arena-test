@@ -28,3 +28,15 @@
 .joined-and-email{
     color: rgb(141, 134, 134);
 }
+@media(max-width: 999px){
+    .dashboard-cover{
+        display: flex;
+        flex-direction: column;
+    }
+    .dashboard-img{
+        width: 80%;
+        height: 20vh;
+        margin: auto;
+        object-fit: contain;
+    }
+}

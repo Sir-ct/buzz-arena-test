@@ -87,4 +87,8 @@ div.form-name{
         padding-top: 1%;
         width: 100%;
     }
+    .update-form-image{
+        height: 25vh;
+        width: 20%;
+    }
 }
