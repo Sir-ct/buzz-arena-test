@@ -35,6 +35,10 @@
     padding-top: 1%;
     width: 70%;
 }
+.update-form-image{
+    height: 50vh;
+    width: 20%;
+}
 .update-form div{
     margin: 20px 0;
 }

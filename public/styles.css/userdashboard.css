@@ -5,10 +5,14 @@
 .dashboard-cover{
     width: 90%;
     margin: auto;
+    padding: 10% 0;
     display: flex;
 }
 .dashboard-img{
+    width: 25%;
+    height: 40vh;
     margin-right: 20px;
+    object-fit: contain;
 }
 .online{
     margin-right: 5px;
@@ -17,6 +21,9 @@
     display: flex;
     align-items: center;
     padding: 0px 0px 10px 0px;
+}
+.userdescription{
+    padding: 15px 0;
 }
 .joined-and-email{
     color: rgb(141, 134, 134);
