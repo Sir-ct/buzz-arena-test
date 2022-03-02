@@ -64,9 +64,11 @@
                                     <h3><%= user.fname %> <%= user.lname%></h3>
                                     <div class="admin-tamper">
                                         <a href="">view user</a>
+                                       <%if(user.issuperadmin){%>
                                         <form action="/user/<%= user.id%>?_method=DELETE" method="post">
                                             <button>delete user</button>
                                         </form>
+                                       <%}%>
                                     </div>
                                 </div>
                             </div>
