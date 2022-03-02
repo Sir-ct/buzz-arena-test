@@ -188,7 +188,7 @@ try{
     if(req.isAuthenticated()){
     res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments})
     }else{
-        res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments})
+    res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments})
     }
 
 } catch{
