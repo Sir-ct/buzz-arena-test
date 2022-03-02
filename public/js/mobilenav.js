@@ -4,7 +4,7 @@ function opennav(){
   let welcometxt = document.getElementById("welcome-txt")
   let welcomemnu = document.getElementById("welcome-mnu")
   let category = document.getElementById("categories")
-  let categorydrop = document.getElementsByClassName("cat-drop")
+  let categorydrop = document.getElementById("catdrop")
 
 mnav.addEventListener("click", ()=>{
 navbar.classList.toggle("show")
