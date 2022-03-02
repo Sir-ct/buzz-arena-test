@@ -83,6 +83,14 @@
 .icommenttime{
     font-size: 12px;
 }
+@media(max-width: 999px){
+    .article-page-body{
+        width: 80%;
+        font-size: 18px;
+        margin: auto;
+        line-height: 2;
+    }
+}
 @media(max-width: 400px){
     .img-article{
         width: 60%;
