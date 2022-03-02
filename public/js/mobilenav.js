@@ -16,7 +16,9 @@ welcomemnu.classList.toggle("show")
 })
 
 category.addEventListener("click", ()=>{
-  categorydrop.classList.toggle("show")
+  for(let i=0; i<categorydrop.length; i++){
+    categorydrop[i].classList.toggle("show")
+  }
 })
 }
 window.addEventListener("load", opennav)
