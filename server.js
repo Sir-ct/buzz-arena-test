@@ -16,7 +16,7 @@ const session = require("cookie-session")
 const nodemailer = require("nodemailer")
 const { error } = require("console");
 const methodOverride = require("method-override")
-const {userAuthenticated, userIsAdmin} = require("./config/auth");
+const {userAuthenticated, userIsAdmin, userIsSuperAdmin} = require("./config/auth");
 const { getMaxListeners } = require("process");
 
 
@@ -664,13 +664,13 @@ app.post("/passwordreset/:token/:userid", async(req, res)=>{
 
 
 //delete post
-app.delete("/:id", async (req,res)=>{
+app.delete("/:id", userIsAdmin, async (req,res)=>{
     await NewArticle.findByIdAndDelete(req.params.id)
     res.redirect("/newArticle")
 })
 
 //delete user
-app.delete("/user/:id", async (req, res)=>{
+app.delete("/user/:id", userIsSuperAdmin, async (req, res)=>{
     await Users.findByIdAndDelete(req.params.id)
     res.redirect("/newArticle")
 })

@@ -13,5 +13,12 @@ module.exports = {
 
         console.log("you are not an admin")
         res.redirect("/")
+    },
+    userIsSuperAdmin: function(req, res, next){
+        if(req.isAuthenticated() && req.user.issuperadmin){
+            return next()
+        }
+
+        res.redirect("/")
     }
 }
