@@ -504,6 +504,10 @@ footer button{
     nav ul li{
         position: relative;
     }
+    #catdrop.show{
+        display: block;
+        transition: 0.5s;
+    }
     .cat-drop{
         height: auto;
     }
