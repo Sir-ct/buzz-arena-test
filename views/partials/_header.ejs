@@ -65,7 +65,7 @@
                   <div class="dashboard-btn"><a href="/userdashboard">Profile</div>
                   <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
                 <%}%>
-                <% if(user.isadmin){%>
+                <% if(user.isadmin || user.issuperadmin){%>
                   <div class="dashboard-btn"><a href="/newArticle"> Panel </a></div>
                   <div class="dashboard-btn"><a href="/userdashboard">Dashboard</a></div>
                   <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
