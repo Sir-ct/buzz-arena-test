@@ -91,3 +91,8 @@ label.article-image-upload{
     display: flex;
     justify-content: space-around;
 }
+@media(max-width: 999px){
+    .admin-panel-wrap{
+        flex-direction: column;
+    }
+}
