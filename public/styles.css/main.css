@@ -100,10 +100,6 @@ a{
     margin: 5px;
     font-size: 20px;
 }
-li:hover ul{
-    display: block;
-    transition: 0.5s;
-}
 .login-signup{
     position: absolute;
     display: flex;
