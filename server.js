@@ -356,7 +356,7 @@ app.post("/admin/makeauthor", async (req, res)=>{
     try{
     let author = await Users.findOne({mail: req.body.authormail})
 
-    if(author == ""){
+    if(!author || author == ""){
         console.log("User is not registered")
         res.redirect("/newArticle")
     }
