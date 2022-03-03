@@ -177,25 +177,31 @@ app.get("/updatearticle/:id", userIsAdmin, async (req, res)=>{
 
 // article page route
 app.get("/:id",  async (req, res)=>{
-try{
-    let popposts = await NewArticle.find().sort({views: -1}).limit(6)
-    let article = await NewArticle.findById(req.params.id)
-    let comments = await Comments.find({postId: req.params.id})
-    article.views += 1
-    article.save()
-    console.log(article.views)
-    console.log(comments)
-    if(req.isAuthenticated()){
-    res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments})
-    }else{
-    res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments})
-    }
-
-} catch{
+    try{
+        let popposts = await NewArticle.find().sort({views: -1}).limit(6)
+        let article = await NewArticle.findById(req.params.id)
+        let comments = await Comments.find({postId: req.params.id})
+        let commentsauthors
+        let commentsauthorsarr = []
+        for(let i = 0; i < comments.length; i++){
+            commentsauthors = await Users.findOne({mail: comments[i].authorEmail})
+            commentsauthorsarr.push(commentsauthors)
+        }
+        console.log(commentsauthorsarr)
+        
+        article.views += 1
+        article.save()
+        if(req.isAuthenticated()){
+        res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments, commentauthor: commentsauthorsarr})
+        }else{
+            res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments,  commentauthor: commentsauthorsarr})
+        }
     
-    res.redirect("/")
-}
-})
+    } catch{
+        
+        res.redirect("/")
+    }
+    })
 
 
 app.get("/404", (req, res)=>{
