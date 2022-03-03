@@ -32,7 +32,8 @@ let newArticleSchema = new mongoose.Schema({
         required: true
     },
     views: {
-        type: Number
+        type: Number,
+        default: 0
     },
     author: {
         type: String

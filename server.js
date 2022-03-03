@@ -546,9 +546,10 @@ app.put("/newArticle/:articleid", async (req, res)=>{
             articleEditError("This User is not an author", req)
         }
         else if(givenmail.isauthor){
-            article.author =  `${givenmail.fname} ${givenmail.lname}`,
-            article.authorMail =  `${givenmail.mail}`,
+            article.author =  `${givenmail.fname} ${givenmail.lname}`
+            article.authorMail =  `${givenmail.mail}`
             article.authorId =  `${givenmail.id}`
+            ariticle.views = 0
 
                 await article.save()
         }
