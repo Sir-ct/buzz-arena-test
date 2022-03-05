@@ -90,6 +90,11 @@
         margin: auto;
         line-height: 2;
     }
+    .comment-wrap{
+        padding: 10% 0;
+        width: 90%;
+        margin: auto;
+    }
 }
 @media(max-width: 400px){
     .img-article{

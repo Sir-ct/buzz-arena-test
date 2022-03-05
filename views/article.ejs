@@ -27,7 +27,7 @@
     <% for(let i=0; i<comments.length; i++){%> 
       <div class="icommentwrap">
         <div class = "icommentdp">
-          <% if(commentauthor[i].profileImgPath){%>
+          <% if(commentauthor[i].profileImgPath || commentauthor != ""){%>
             <img src="<%= commentauthor[i].profileImgPath %>" alt="profile picture">
             <%} else{%>
                 <img src="/images/User.jpg" alt="profile picture">
