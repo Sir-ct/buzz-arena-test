@@ -18,21 +18,33 @@
                         <div class="form-name">
                             facebook URL
                         </div>
-                        <input type="text" name="facebook" value='<% socials ? <%= socials.facebook%> : "" %>' placeholder="enter facebook url">
+                       <% if(socials && socials != ""){%>
+                        <input type="text" name="facebook" value='<%= socials.facebook%>' placeholder="enter facebook url">
+                        <%} else {%>
+                            <input type="text" name="facebook" value='' placeholder="enter facebook url">
+                        <%}%>
                     </div>
 
                     <div>
                         <div class="form-name">
                             twitter URL
                         </div>
-                        <input type="text" name="twitter" value='<%= socials.twitter %>' placeholder="enter twitter profile link">
+                        <%if(socials && socials != ""){%>
+                            <input type="text" name="twitter" value='<%= socials.twitter %>' placeholder="enter twitter profile link">
+                        <%} else {%>
+                            <input type="text" name="twitter" value='' placeholder="enter twitter profile link">
+                        <%}%>
                     </div>
 
                     <div>
                         <div class="form-name">
                             instagram URL
                         </div>
+                       <%if(socials && socials != ""){%>
                         <input type="text" name="instagram" value="<%= socials.instagram %>" placeholder="enter instagram profile link">
+                        <%} else {%>
+                            <input type="text" name="instagram" value="" placeholder="enter instagram profile link">
+                        <%}%>
                     </div>
                     
                     <button type="submit" class="update-save-btn">Save</button>
