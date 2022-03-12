@@ -18,7 +18,7 @@
                         <div class="form-name">
                             facebook URL
                         </div>
-                        <input type="text" name="facebook" value='<%= socials.facebook %>' placeholder="enter facebook url">
+                        <input type="text" name="facebook" value='<% socials ? <%= socials.facebook%> : "" %>' placeholder="enter facebook url">
                     </div>
 
                     <div>
