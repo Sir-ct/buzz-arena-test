@@ -240,7 +240,7 @@ app.post("/register", async (req, res)=>{
                 let regmail = `
                     <h2>Welcome</h2>
                     <p> You Are successfully registered on Buzz arena, go ahead and login with the link below<br>
-                        <a href="buzz-arena-test.herokuapp.com/login"> Login </a>
+                        <a href="buzzarena.net/login"> Login </a>
                     </p>
                 `
                 sendmail(req.body.email, "Welcome to the hood", regmail)
