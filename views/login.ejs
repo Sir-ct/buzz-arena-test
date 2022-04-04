@@ -1,40 +1,42 @@
 <%- include("./partials/_header") %>
 
-<div class="lswrapper">
-    <div class="signup-form">
-        <% if(messages.error){%>
-        <%= messages.error %>
-        <% } %>
-        <h2>login</h2>
-        <form action="/login" method="post">
-            <label for="email">email</label>
-            <div><input type="email" name="email" id="email" placeholder="example@mail.com"></div>
-            <label for="password">password</label>
-            <div><input type="password" name="password" id="password"><ion-icon name="eye-outline" id="showpass"></ion-icon></div>
-            <input type="checkbox" name="remember" id="remember"> <label for="remember"> remember me</label>
-            <div class="submit"><input type="submit" value="Login"></div>
-            <a href="/resetpassword">forgot password?</a>
-        </form>
-
-        <p>don't have an account? <a href="/register">Join Up</a></p>
-
+<div class="logsign">
+    <div class="lswrapper" >
+        <div class="signup-form">
+            <% if(messages.error){%>
+            <%= messages.error %>
+            <% } %>
+            <h2>login</h2>
+            <form action="/login" method="post">
+                <label for="email">email</label>
+                <div><input type="email" name="email" id="email" placeholder="example@mail.com"></div>
+                <label for="password">password</label>
+                <div><input type="password" name="password" id="password"><ion-icon name="eye-outline" id="showpass"></ion-icon></div>
+                <input type="checkbox" name="remember" id="remember"> <label for="remember"> remember me</label>
+                <div class="submit"><input type="submit" value="Login"></div>
+                <a href="/resetpassword">forgot password?</a>
+            </form>
+    
+            <p>don't have an account? <a href="/register">Join Up</a></p>
+    
+        </div>
     </div>
+    
+    <script>
+        let pwordshow = document.getElementById("showpass")
+        let pwordfield = document.getElementById("password")
+    
+        pwordshow.addEventListener("click", ()=>{
+            if(pwordfield.type == "password"){
+                pwordfield.type = "text"
+            } else{
+                pwordfield.type = "password"
+            }
+            console.log(pwordfield.type)
+    
+        })
+    </script>
+    
+    <script src="./js/mobilenav.js"></script>
 </div>
-
-<script>
-    let pwordshow = document.getElementById("showpass")
-    let pwordfield = document.getElementById("password")
-
-    pwordshow.addEventListener("click", ()=>{
-        if(pwordfield.type == "password"){
-            pwordfield.type = "text"
-        } else{
-            pwordfield.type = "password"
-        }
-        console.log(pwordfield.type)
-
-    })
-</script>
-
-<script src="./js/mobilenav.js"></script>
 <%- include("./partials/_footer") %>

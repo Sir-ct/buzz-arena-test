@@ -1,45 +1,47 @@
 <%- include("./partials/_header") %>
 
-<div class="lswrapper">
-    <div class="signup-form">
-        <h2>Join up</h2>
-        <div>
-            <% if(errormsg){%>
-                <%= errormsg %>
-            <%}%>
-           </div>
-        <form action="/register" method="post" >
-            <label for="firstname">First name</label>
-            <div><input type="text" name="firstname" id="firstname" value = "<%= feilds.firstname%>"></div>
-            <label for="lastname">last name</label>
-            <div><input type="text" name="lastname" id="lastname" value = "<%= feilds.lastname%>"></div>
-            <label for="email">email</label>
-            <div><input type="email" name="email" id="email" placeholder="example@mail.com" value = "<%= feilds.email%>"></div>
-            <label for="password">password</label>
-            <div><input type="password" name="password" id="password"><ion-icon name="eye-outline" id="showpass"></ion-icon></div>
-            <input type="checkbox" name="t&c" id="t&c"> <label for="t&c"> agree to terms and conditions</label>
-            <div class="submit"><input type="submit" value="Join Up"></div>
-        </form>
-       
-        <p>already have an account? <a href="/login">Login</a></p>
+<div class="logsign">
+    <div class="lswrapper">
+        <div class="signup-form">
+            <h2>Join up</h2>
+            <div>
+                <% if(errormsg){%>
+                    <%= errormsg %>
+                <%}%>
+               </div>
+            <form action="/register" method="post" >
+                <label for="firstname">First name</label>
+                <div><input type="text" name="firstname" id="firstname" value = "<%= feilds.firstname%>"></div>
+                <label for="lastname">last name</label>
+                <div><input type="text" name="lastname" id="lastname" value = "<%= feilds.lastname%>"></div>
+                <label for="email">email</label>
+                <div><input type="email" name="email" id="email" placeholder="example@mail.com" value = "<%= feilds.email%>"></div>
+                <label for="password">password</label>
+                <div><input type="password" name="password" id="password"><ion-icon name="eye-outline" id="showpass"></ion-icon></div>
+                <input type="checkbox" name="t&c" id="t&c"> <label for="t&c"> agree to terms and conditions</label>
+                <div class="submit"><input type="submit" value="Join Up"></div>
+            </form>
+           
+            <p>already have an account? <a href="/login">Login</a></p>
+        </div>
     </div>
+    
+    
+    <script>
+        let pwordshow = document.getElementById("showpass")
+        let pwordfield = document.getElementById("password")
+    
+        pwordshow.addEventListener("click", ()=>{
+            if(pwordfield.type == "password"){
+                pwordfield.type = "text"
+            } else{
+                pwordfield.type = "password"
+            }
+            console.log(pwordfield.type)
+    
+        })
+    </script>
+    <script src="./js/mobilenav.js"></script>
+    
 </div>
-
-
-<script>
-    let pwordshow = document.getElementById("showpass")
-    let pwordfield = document.getElementById("password")
-
-    pwordshow.addEventListener("click", ()=>{
-        if(pwordfield.type == "password"){
-            pwordfield.type = "text"
-        } else{
-            pwordfield.type = "password"
-        }
-        console.log(pwordfield.type)
-
-    })
-</script>
-<script src="./js/mobilenav.js"></script>
-
 <%- include("./partials/_footer") %>

@@ -1,14 +1,16 @@
-body.logsign{
-    background-color: rgb(243, 236, 236)
+.logsign{
+    background-image: url("/images/Hood-logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .lswrapper{
-    width: 50%;
+    width: 100%;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     text-transform: capitalize;
-    background-color: rgba(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 10% 0;
 }
 .lswrapper ion-icon{
@@ -19,10 +21,13 @@ body.logsign{
     border-top: 1px solid rgb(216, 199, 199);
     border-bottom: 1px solid rgb(216, 199, 199);
     padding: 7% 0;
+
+    
 }
 .lswrapper input{
     border: none;
     outline: none;
+    background-color: inherit;
 }
 .lswrapper form div{
     display: flex;
@@ -46,4 +51,8 @@ body.logsign{
 .signup-form{
     padding: 0px 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    background-color: rgba(243, 240, 240, 0.5);
+    border-radius: 10px;
+    border-top: 2px solid rgb(255, 255, 255);
+    border-right: 2px solid rgb(255, 255, 255);
 }

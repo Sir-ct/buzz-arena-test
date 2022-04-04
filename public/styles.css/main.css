@@ -107,7 +107,8 @@ a{
     justify-content: space-around;
     align-items: center;
     right: 10%;
-    bottom: 10%;
+    top: 15%;
+    z-index: 10;
 }
 .login-register{
     display: flex;
@@ -456,7 +457,7 @@ footer button{
         display: none;
     }
     header{
-        height: 100px;
+        height: 120px;
     }
     .mobilenav{
         width: 20%;
@@ -509,10 +510,10 @@ footer button{
     }
     .login-signup{
         font-size: 10px;
-        position: fixed;
-        width: 100%;
+        position: absolute;
+        width: 20%;
         height: 7vh;
-        top: 10px;
+        top: 70px;
         right: 15%;
         transform: translateX(50%);
         justify-content: space-around;
