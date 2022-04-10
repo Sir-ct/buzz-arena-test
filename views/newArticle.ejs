@@ -8,8 +8,8 @@
         </section>
 
         <div class="admin-panel">
-            <h1>Control Panel</h1>
-            <div class="admin-panel-wrap">
+            <h1 id="panel">Control Panel</h1>
+            <div class="admin-panel-wrap" id="panelwrap">
                 
                 <div class="createAuthor">
                     <h2> Create Author</h2>
@@ -57,16 +57,18 @@
                 <div class="allusers">
                     <h2>All Users</h2>
                     <div class="users-cont">
-                        <% users.forEach((user, index)=>{ %>
+                        <% users.forEach((usr, index)=>{ %>
                             <div class="user">
                                 <div class="user-number"><%= index + 1%></div>
                                 <div class="user-det">
-                                    <h3><%= user.fname %> <%= user.lname%></h3>
+                                    <h3><%= usr.fname %> <%= usr.lname%></h3>
                                     <div class="admin-tamper">
                                         <a href="">view user</a>
-                                        <form action="/user/<%= user.id%>?_method=DELETE" method="post">
+                                       <% if(user.issuperadmin){%>
+                                        <form action="/user/<%= usr.id%>?_method=DELETE" method="post">
                                             <button>delete user</button>
                                         </form>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -78,6 +80,14 @@
             </div>
         </div>
     </div>
+    <script>
+        let panel = document.getElementById("panel")
+        let panelwrap = document.getElementById("panelwrap")
 
-    <script src="./js/mobilenav.js"></script>
+        panel.addEventListener("click", ()=>{
+            panelwrap.classList.toggle("show")
+        })
+    </script>
+
+    <script src="/js/mobilenav.js"></script>
 <%- include("./partials/_footer") %>

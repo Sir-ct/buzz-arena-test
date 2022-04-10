@@ -16,7 +16,25 @@
       <%- article.sanitizedContent %>
       
     </div>
-
+    <div class="interactions">
+      <%if(loggedIn == true){%>
+        <form class="like" action="/like/<%= article.id %>">
+          <button>
+           <% if(like){%>
+            <ion-icon name="thumbs-up" class="like-img"></ion-icon>
+            <%} else {%>
+              <ion-icon name="thumbs-up-outline" class="like-img"></ion-icon>
+            <%}%> 
+          </button>
+        </form>
+        <%if(likes.length == 1){%>
+          <div><%= likes.length%> like</div>
+        <%} else if(likes.length > 1){%>
+          <div><%= likes.length%> likes</div>
+        <%}%>
+      <%}%>
+      <div class="share"></div>
+     </div>
 </div>
 
 <section class="commentsection">
@@ -27,7 +45,7 @@
     <% for(let i=0; i<comments.length; i++){%> 
       <div class="icommentwrap">
         <div class = "icommentdp">
-          <% if(commentauthor[i].profileImgPath || commentauthor != ""){%>
+          <% if(commentauthor[i] && commentauthor[i].profileImgPath != ""){%>
             <img src="<%= commentauthor[i].profileImgPath %>" alt="profile picture">
             <%} else{%>
                 <img src="/images/User.jpg" alt="profile picture">
@@ -85,5 +103,5 @@
 
   </div>
 </section>
-  <script src="./js/mobilenav.js"></script>
+  <script src="/js/mobilenav.js"></script>
 <%- include("./partials/_footer") %>

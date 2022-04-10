@@ -74,8 +74,15 @@ label.article-image-upload{
     text-align: center;
 }
 .admin-panel-wrap{
-    display: flex;
+    display: none;
     justify-content: space-around;
+    
+}
+.admin-panel-wrap.show{
+    display: flex;
+}
+.allposts, .allusers{
+    width: 30%;
 }
 .admin-panel-wrap .post, .admin-panel-wrap .user{
     display: flex;
@@ -91,8 +98,12 @@ label.article-image-upload{
     display: flex;
     justify-content: space-around;
 }
-@media(max-width: 999px){
+@media(max-width: 700px){
     .admin-panel-wrap{
-        flex-direction: column;
+       flex-direction: column;
+    }
+    .allposts, .allusers{
+        width: 80%;
+        margin: auto;
     }
 }

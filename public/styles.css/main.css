@@ -33,14 +33,26 @@ img{
     width: 100px;
     height: 100px;
 }
+.search{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 .search input{
     width: 80px;
     border: none;
     outline: none;
     background-color: inherit;
+    color: rgb(255, 255, 255);
 }
 .mobilesearch{
     display: none;
+}
+.search button{
+    background-color: inherit;
+}
+.search-icon{
+    color: rgb(255, 255, 255);
 }
 ion-icon{
     font-size: 30px;
@@ -243,6 +255,7 @@ a{
     margin: 20px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
+    box-shadow: 2px 2px 10px rgb(180, 170, 170);
 }
 .articles h1{
     margin: 10px 0;
@@ -466,6 +479,27 @@ footer button{
         cursor: pointer;
         z-index: 1000;
         justify-content: space-between;
+    }
+    .mobilesearch{
+        display: flex;
+        position: absolute;
+        top: 75px;
+        left: 10px;
+    }
+    .mobilesearch input{
+        width: 60%;
+        background-color: inherit;
+        border: none;
+        outline: none;
+    }
+    .mobilesearch button{
+        background-color: inherit;
+        border-radius: 5px;
+        height: 30px;
+    }
+    .search-icon{
+        color: rgb(255, 255, 255);
+        font-size: 16px;
     }
     .mobilenav.show{
         left: 10%;

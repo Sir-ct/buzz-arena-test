@@ -12,6 +12,8 @@
 .article-head-dets h1{
     font-size: 35px;
     text-transform: capitalize;
+    width: 50%;
+    margin: auto;
 }
 .article-page-det{
     display: flex;
@@ -28,6 +30,21 @@
     font-size: 20px;
     margin: auto;
     line-height: 2;
+}
+.interactions{
+    width: 50%;
+    margin: auto;
+    border-top: 1px solid rgb(238, 228, 228);
+}
+.like button{
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background-color: inherit;
+    border: none;
+}
+.like-img{
+    width: 100%;
 }
 .author input{
     padding: 10px;
@@ -68,7 +85,7 @@
     border-radius: 50%;
 }
 .icommentdp img{
-    border-radius: 50%;/**/
+    border-radius: 50%;
     width: 100%;
     display: block;
 }
@@ -83,16 +100,22 @@
 .icommenttime{
     font-size: 12px;
 }
-@media(max-width: 999px){
+@media(max-width: 700px){
+    .article-head-dets h1{
+        font-size: 35px;
+        text-transform: capitalize;
+        width: 80%;
+        margin: auto;
+    }
     .article-page-body{
         width: 80%;
-        font-size: 18px;
+        font-size: 20px;
         margin: auto;
         line-height: 2;
     }
     .comment-wrap{
         padding: 10% 0;
-        width: 90%;
+        width: 80%;
         margin: auto;
     }
 }

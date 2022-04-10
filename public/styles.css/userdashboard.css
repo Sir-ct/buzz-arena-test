@@ -15,7 +15,11 @@
     object-fit: contain;
 }
 .online{
+    width: 10px;
+    height: 10px;
     margin-right: 5px;
+    background-color: rgb(0, 255, 0);
+    border-radius: 50%;
 }
 .last-login{
     display: flex;
@@ -28,7 +32,7 @@
 .joined-and-email{
     color: rgb(141, 134, 134);
 }
-@media(max-width: 999px){
+@media(max-width: 700px){
     .dashboard-cover{
         display: flex;
         flex-direction: column;
@@ -38,5 +42,9 @@
         height: 20vh;
         margin: auto;
         object-fit: contain;
+    }
+    .dashboard-dets{
+        width: 90%;
+        margin: auto;
     }
 }

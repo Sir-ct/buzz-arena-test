@@ -6,6 +6,7 @@ const NewArticle = require("./models/articlesmodel");
 const Users = require("./models/usersmodel")
 const Comments = require("./models/commentsmodel")
 const Usersocials = require("./models/usersocialsmodel") //still
+const Likes = require("./models/likesmodel")
 const Token = require("./models/tokenmodel") //arill
 const bcrypt = require("bcryptjs")
 const crypto = require("crypto")
@@ -181,6 +182,8 @@ app.get("/:id",  async (req, res)=>{
         let popposts = await NewArticle.find().sort({views: -1}).limit(6)
         let article = await NewArticle.findById(req.params.id)
         let comments = await Comments.find({postId: req.params.id})
+        let likes = await Likes.find({postId: req.params.id})
+        let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
         let commentsauthors
         let commentsauthorsarr = []
         for(let i = 0; i < comments.length; i++){
@@ -192,10 +195,10 @@ app.get("/:id",  async (req, res)=>{
         article.views += 1
         article.save()
         if(req.isAuthenticated()){
-        res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments, commentauthor: commentsauthorsarr})
-        }else{
-            res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments,  commentauthor: commentsauthorsarr})
-        }
+            res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments, commentauthor: commentsauthorsarr, likes: likes, like: like})
+            }else{
+                res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments,  commentauthor: commentsauthorsarr, likes: likes, like: like})
+            }
     
     } catch{
         
@@ -297,6 +300,9 @@ console.log(req.files)
     // validating inputs
     if(req.body.title =="" || req.body.title < 5){
         articleUploadError("Title is not long enough", req.body)
+        }
+        else if(req.body.title.length > 75){
+            articleUploadError("Title is too long", req.body)
         }
         else if(req.body.description == "" || req.body.description < 10){
             articleUploadError("description is not long enough", req.body)
@@ -404,7 +410,7 @@ app.post("/removetrending/:id", async (req,res)=>{
 })
 //posting comment
 app.post("/comment/:id", userAuthenticated, async(req, res)=>{
-    article = await NewArticle.findById(req.params.id)
+    let article = await NewArticle.findById(req.params.id)
 
     if(req.body.comment == ""){
         res.redirect(`/${req.params.id}`)
@@ -668,7 +674,49 @@ app.post("/passwordreset/:token/:userid", async(req, res)=>{
     }
 })
 
+//searching for item
+app.post("/search", async (req, res)=>{
+    let articles = await NewArticle.find()
+    let popposts = await NewArticle.find().sort({views: -1}).limit(6)
 
+    if(req.body.search == ""){
+        res.redirect("/")
+    }else{
+        let searchitem = req.body.search
+        let searchregex = new RegExp(searchitem)
+        let founditems = []
+
+
+      for(let i=0; i<articles.length; i++){
+            if(searchregex.test(articles[i].title)){
+                founditems.push(articles[i])
+            }
+        }
+
+        res.render("searchresult", {articles: founditems, popular: popposts, loggedIn: req.isAuthenticated() ? true : false, user: req.user})
+    }
+})
+
+//liking post
+app.post("/like/:id", userAuthenticated, async(req, res)=>{
+    console.log(req.user.id, req.params.id)
+    let like = await Likes.findOne({likerId: req.user.id, postId: req.params.id})
+
+    if(like){
+        console.log(like + ": to be deleted")
+        await like.delete()
+    } else{
+        like = new Likes({
+            likerId: req.user.id,
+            likerName: `${req.user.fname} ${req.user.lname}`,
+            postId: req.params.id
+        })
+
+        await like.save()
+        console.log(like)
+    }
+    res.redirect(`/${req.params.id}`)
+})
 //delete post
 app.delete("/:id", userIsAdmin, async (req,res)=>{
     await NewArticle.findByIdAndDelete(req.params.id)
