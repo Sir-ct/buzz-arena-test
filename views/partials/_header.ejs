@@ -33,11 +33,10 @@
         <div class="logodiv" data-aos="fade-left" data-aos-delay="500" data-aos-duration="1500">
           _BUZZ-ARENA.
         </div>
-        <div class="search" data-aos="fade-left" data-aos-delay="500" data-aos-duration="1500">
-          <input type="text" placeholder="SEARCH">
-          <ion-icon name="search-outline"></ion-icon>
-        </div>
-        <div class="mobilesearch"></div>
+        <form action="/search" method="post" class="search" data-aos="fade-left" data-aos-delay="500" data-aos-duration="1500">
+          <input type="text" placeholder="SEARCH" name="search">
+          <button><ion-icon name="search-outline" class="search-icon"></ion-icon></button>
+        </form>
       </div>
       <nav id="navbar">
         <ul>

@@ -465,7 +465,7 @@ footer button{
     }
 }
 
-@media(max-width: 999px){
+@media(max-width: 700px){
     .socialicons{
         display: none;
     }
@@ -480,6 +480,9 @@ footer button{
         z-index: 1000;
         justify-content: space-between;
     }
+    .search{
+        display: none;
+    }
     .mobilesearch{
         display: flex;
         position: absolute;
@@ -491,6 +494,7 @@ footer button{
         background-color: inherit;
         border: none;
         outline: none;
+        color: rgb(243, 236, 236);
     }
     .mobilesearch button{
         background-color: inherit;
