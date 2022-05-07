@@ -449,7 +449,7 @@ app.post("/forgotpassword", async (req, res)=>{
             })
     
             let resetlink = `<h1> click on the link below to reset your password</>
-            <a href="https://buzz-arena-test.herokuapp.com/passwordreset/${token.token}/${user.id}"> Reset password</a>`
+            <a href="https://buzzarena.net/passwordreset/${token.token}/${user.id}"> Reset password</a>`
 
             sendmail(user.mail, "password reset link", resetlink)
             res.render("resetpassword", {loggedIn: req.isAuthenticated() ? true : false, msg: "reset link has been sent to your email"})
@@ -736,18 +736,18 @@ app.use((req, res)=>{
 
 async function sendmail(tomail, sbj, content){
     let transport = nodemailer.createTransport({
-        host: "secure308.inmotionhosting.com",
+        host: "smtp.zoho.com",
         port: 465,
         secure: true,
         auth: {
-          user: "test@buzzarena.net",
+          user: "welcome@buzzarena.net",
           pass: process.env.MAIL_PASS
         },
         ignoreTLS: true,
       });
 
     let message = {
-        from: 'test@buzzarena.net',
+        from: 'welcome@buzzarena.net',
         to: tomail,
         subject: sbj,
         html: content
