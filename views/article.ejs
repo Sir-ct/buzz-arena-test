@@ -84,7 +84,8 @@
      <h2 class="popular-posts-header">Popular Posts</h2>
      <div class="popular-posts-cont">  
 
-       <% for(let i=0; i<6; i++){%>
+     <%if(pupular){%>
+      <% for(let i=0; i<6; i++){%>
          
         <div class="popular-posts">
           <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
@@ -95,6 +96,7 @@
         </div>
       
       <% } %>
+      <%}%>
 
      </div>
     </div>
