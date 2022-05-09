@@ -85,7 +85,7 @@
      <div class="popular-posts-cont">  
 
      <%if(popular){%>
-      <% for(let i=0; i<6; i++){%>
+      <% for(let i=0; i<popular.length; i++){%>
          
         <div class="popular-posts">
           <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
