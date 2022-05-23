@@ -16,26 +16,29 @@
       <%- article.sanitizedContent %>
       
     </div>
-   <div class="interactions">
-    <%if(loggedIn == true){%>
-      <form class="like" action="/like/<%= article.id %>" method="post">
-        <button>
-         <% if(like && like != ""){%>
-          <ion-icon name="thumbs-up" class="like-img"></ion-icon>
-          <%} else {%>
-            <ion-icon name="thumbs-up-outline" class="like-img"></ion-icon>
-          <%}%> 
-        </button>
-      </form>
-      <%if(likes.length == 1){%>
-        <div><%= likes.length%> like</div>
-      <%} else if(likes.length > 1){%>
-        <div><%= likes.length%> likes</div>
+    <div class="interactions">
+      <%if(loggedIn == true){%>
+        <form class="like" id="like" action="/like/<%= article.id %>" method="post">
+          <button id="likebtn">
+           <% if(like && like != ""){%>
+            <ion-icon name="thumbs-up" class="like-img" id="likeicon"></ion-icon>
+            <%} else {%>
+              <ion-icon name="thumbs-up-outline" class="like-img" id="likeicon"></ion-icon>
+            <%}%> 
+          </button>
+        </form>
+       
+        <div id="likecount">
+          <%if(likes.length == 1){%>
+            <%= likes.length%> like
+          <%} else if(likes.length > 1){%>
+            <%= likes.length%> likes
+          <%}%>
+        </div>
+  
       <%}%>
-
-    <%}%>
-    <div class="share"></div>
-   </div>
+      <div class="share"></div>
+     </div>
 </div>
 
 <section class="commentsection">
@@ -107,4 +110,45 @@
   </div>
 </section>
   <script src="/js/mobilenav.js"></script>
+  <script>
+    // just to make page not reload when like button is pressed
+        function jstlog(){
+          let likeform = document.getElementById("like")
+          let likebtn = document.getElementById("likebtn")
+          let likecount = document.getElementById("likecount")
+    
+          
+    
+          likeform.addEventListener("submit", (e)=>{
+            e.preventDefault()
+            
+            fetch(likeform.action, {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            }).then((res)=> res.json()).then((data)=>{
+             
+              
+    
+              if(data.like != null){
+                likebtn.innerHTML = ` <ion-icon name="thumbs-up" class="like-img" id="likeicon"></ion-icon>`
+              }else{
+                likebtn.innerHTML = ` <ion-icon name="thumbs-up-outline" class="like-img" id="likeicon"></ion-icon>`
+              }
+    
+              if(data.likes.length == 1){
+                likecount.innerHTML = data.likes.length + " like"
+              }else if(data.likes.length > 1){
+                likecount.innerHTML = data.likes.length + " likes"
+              }else{
+                likecount.innerHTML = ""
+              }
+            })
+    
+          })
+    
+        } 
+        window.addEventListener("load", jstlog)
+      </script>
 <%- include("./partials/_footer") %>

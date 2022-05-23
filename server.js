@@ -700,11 +700,18 @@ app.post("/search", async (req, res)=>{
 //liking post
 app.post("/like/:id", userAuthenticated, async(req, res)=>{
     console.log(req.user.id, req.params.id)
-    let like = await Likes.findOne({likerId: req.user.id, postId: req.params.id})
+  
+    let likes = await Likes.find({postId: req.params.id})
+    let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
 
     if(like){
-        console.log(like + ": to be deleted")
+        //console.log(like + ": to be deleted")
         await like.delete()
+
+        likes = await Likes.find({postId: req.params.id})
+        like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
+
+       res.json({like: like, likes: likes})
     } else{
         like = new Likes({
             likerId: req.user.id,
@@ -713,9 +720,14 @@ app.post("/like/:id", userAuthenticated, async(req, res)=>{
         })
 
         await like.save()
-        console.log(like)
+
+        likes = await Likes.find({postId: req.params.id})
+        like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
+
+         res.json({like: like, likes: likes})
+       // console.log(like)
     }
-    res.redirect(`/${req.params.id}`)
+    //res.redirect(`/${req.params.id}`)
 })
 //delete post
 app.delete("/:id", userIsAdmin, async (req,res)=>{
