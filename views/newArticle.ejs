@@ -55,9 +55,31 @@
                 </div>
 
                 <div class="allusers">
-                    <h2>All Users</h2>
+                    <h2>Mail Users</h2>
                     <div class="users-cont">
                         <% users.forEach((usr, index)=>{ %>
+                            <div class="user">
+                                <div class="user-number"><%= index + 1%></div>
+                                <div class="user-det">
+                                    <h3><%= usr.fname %> <%= usr.lname%></h3>
+                                    <div class="admin-tamper">
+                                        <a href="">view user</a>
+                                       <% if(user.issuperadmin){%>
+                                        <form action="/user/<%= usr.id%>?_method=DELETE" method="post">
+                                            <button>delete user</button>
+                                        </form>
+                                        <%}%>
+                                    </div>
+                                </div>
+                            </div>
+                       <% })%>
+                    </div>
+                </div>
+
+                <div class="google-users">
+                    <h2>Google Users</h2>
+                    <div class="users-cont">
+                        <% gusers.forEach((usr, index)=>{ %>
                             <div class="user">
                                 <div class="user-number"><%= index + 1%></div>
                                 <div class="user-det">

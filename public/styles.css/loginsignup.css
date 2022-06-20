@@ -48,11 +48,28 @@
     background-color: rgba(0, 0, 0, 0.8);
     color: rgb(255, 255, 255);
 }
+.lswrapper .googlesubmit{
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(100, 0, 0, 0.8);
+    color: rgb(255, 255, 255);
+}
+.googlesubmit a{
+    color: inherit;
+}
 .signup-form{
+    min-height: 20vh;
     padding: 0px 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
     background-color: rgba(243, 240, 240, 0.5);
     border-radius: 10px;
     border-top: 2px solid rgb(255, 255, 255);
     border-right: 2px solid rgb(255, 255, 255);
+}
+.lswrapper form div.break{
+    display: block;
+    border: none;
+    text-align: center;
 }

@@ -20,17 +20,51 @@ function initialize(passport){
                 return done(null, false, {message: "password is incorrect"})
             }
         }
-
-       
+    
     }))
 
+    passport.use(new GoogleStrategy({
+        clientID:    process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://localhost:5000/auth/google/callback",
+        passReqToCallback   : true
+      },
+      async (request, accessToken, refreshToken, profile, done) => {
+          //checking if user already signed up with username and password
+        let user = await User.findOne({mail: profile.emails[0].value})
+
+        if(user){
+           return done(null, false, {message: "A user already registered with this mail"})
+        }else{
+               let user =  await Guser.findOne({ googleId: profile.id })
+
+               if(user){
+
+                console.log(`user is registered already ${user}`)
+                   return done(null, user)
+               }else {
+
+                let user = new Guser({
+                    googleId: profile.id,
+                    fname: profile.name.givenName,
+                    lname: profile.name.familyName,
+                    mail: profile.emails[0].value,
+                    profileImgPath: profile.photos[0].value
+                })
+
+                 await user.save()
+                 console.log(`user is not registered already regigistering now ${user}`)
+                 return done(null, user)
+               }
+        }
+      }
+    ));
+
     passport.serializeUser((user, done)=>{
-        done(null, user.id)
+        done(null, user)
     })
-    passport.deserializeUser((id, done)=>{
-        User.findById(id, (err, user)=>{
-            done(err, user)
-        })
+    passport.deserializeUser((user, done)=>{
+        done(null, user)
     })
 }
 

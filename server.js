@@ -4,6 +4,7 @@ const fileupload = require("express-fileupload")
 const mongoose = require("mongoose")
 const NewArticle = require("./models/articlesmodel");
 const Users = require("./models/usersmodel")
+const Gusers = require("./models/gusersmodel")
 const Comments = require("./models/commentsmodel")
 const Usersocials = require("./models/usersocialsmodel") //still
 const Likes = require("./models/likesmodel")
@@ -163,11 +164,12 @@ app.get("/passwordreset/:token/:userid", (req, res)=>{
 app.get("/newArticle", userAuthenticated, userIsAdmin,  async (req, res)=>{
     let posts = await NewArticle.find()
     let users = await Users.find()
+    let gusers = await Gusers.find()
     if(req.isAuthenticated()){
-    res.render("newArticle", {msg: "", article: new NewArticle(), posts: posts, users: users, loggedIn: true, user: req.user})
+    res.render("newArticle", {msg: "", article: new NewArticle(), posts: posts, users: users, gusers: gusers, loggedIn: true, user: req.user})
     }
     else{
-        res.render("newArticle", {msg: "", article: new NewArticle(), posts: posts, users: users, loggedIn: false, user: req.user})
+        res.render("newArticle", {msg: "", article: new NewArticle(), posts: posts, users: users, gusers: gusers, loggedIn: false, user: req.user})
     }
 })
 //edit article route
@@ -204,7 +206,24 @@ app.get("/:id",  async (req, res)=>{
         
         res.redirect("/")
     }
-    })
+})
+
+ //google login auth
+app.get('/auth/google',
+passport.authenticate('google', { scope:
+    [ 'email', 'profile' ] }
+));
+
+app.get( '/auth/google/callback',
+  passport.authenticate( 'google', {
+      failureRedirect: '/login'
+}), async (req, res)=>{
+  let user = await Gusers.findById(req.user.id)
+  user.lastLoggedIn = Date.now()
+ await user.save()
+
+  res.redirect("/")
+});
 
 
 app.get("/404", (req, res)=>{
@@ -216,8 +235,9 @@ app.post("/register", async (req, res)=>{
 
     //checking if user exists
     let finduser = await Users.findOne({mail: req.body.email})
+    let findguser = await Gusers.findOne({mail: req.body.email})
 
-    if(finduser){
+    if(finduser || findguser){
         UserUploadError("User with the email already exists", req.body)
     } 
     else if(!req.body.firstname || req.body.firstname < 2){
@@ -319,7 +339,7 @@ console.log(req.files)
         else{
 
         //checking if email owner is an author
-        let givenmail = await Users.findOne({mail: req.body.authormail})
+        let givenmail = await Users.findOne({mail: req.body.authormail}) ? await Users.findOne({mail: req.body.authormail}) : await Gusers.findOne({mail: req.body.authormail})
         if(givenmail == null){
             articleUploadError("This email is not Registered", req.body)
 }
@@ -357,7 +377,7 @@ async function articleUploadError(emsg, persist){
     let posts = await NewArticle.find()
     let users = await Users.find()
     let message = emsg
-    res.render("newArticle", {msg: message, article: persist, posts: posts, users: users, loggedIn: req.isAuthenticated() ? true : false, user: req.user })
+    res.render("newArticle", {msg: message, article: persist, posts: posts, users: users, gusers: users, loggedIn: req.isAuthenticated() ? true : false, user: req.user })
 }
 })
        
@@ -366,7 +386,7 @@ async function articleUploadError(emsg, persist){
 app.post("/admin/makeauthor", async (req, res)=>{
 
     try{
-    let author = await Users.findOne({mail: req.body.authormail})
+        let author = await Users.findOne({mail: req.body.authormail}) || await Gusers.findOne({mail: req.body.authormail})
 
     if(!author || author == ""){
         console.log("User is not registered")
@@ -550,7 +570,7 @@ app.put("/newArticle/:articleid", async (req, res)=>{
     }
 
     if(req.body.authormail != ""){
-        let givenmail = await Users.findOne({mail: req.body.authormail})
+        let givenmail = await Users.findOne({mail: req.body.authormail}) || await Gusers.findOne({mail: req.body.authormail})
         if(!givenmail){
             articleEditError("This email is not Registered", req)
         }

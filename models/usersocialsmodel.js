@@ -13,6 +13,9 @@ const socialsSchema = new mongoose.Schema({
     },
     instagram: {
         type: String
+    },
+    medium: {
+        type: String
     }
 })
 
