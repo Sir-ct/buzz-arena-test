@@ -185,7 +185,7 @@ app.get("/:id",  async (req, res)=>{
         let article = await NewArticle.findById(req.params.id)
         let comments = await Comments.find({postId: req.params.id})
         let likes = await Likes.find({postId: req.params.id})
-        let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
+        let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefinedd
         let commentsauthors
         let commentsauthorsarr = []
         for(let i = 0; i < comments.length; i++){
@@ -719,22 +719,22 @@ app.post("/search", async (req, res)=>{
 
 //liking post
 app.post("/like/:id", userAuthenticated, async(req, res)=>{
-    console.log(req.user.id, req.params.id)
+    console.log(req.user, req.params.id)
   
     let likes = await Likes.find({postId: req.params.id})
-    let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
+    let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
 
     if(like){
-        //console.log(like + ": to be deleted")
+        console.log(like + ": to be deleted")
         await like.delete()
 
         likes = await Likes.find({postId: req.params.id})
-        like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
+        like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
 
        res.json({like: like, likes: likes})
     } else{
         like = new Likes({
-            likerId: req.user.id,
+            likerId: req.user._id,
             likerName: `${req.user.fname} ${req.user.lname}`,
             postId: req.params.id
         })
@@ -742,10 +742,10 @@ app.post("/like/:id", userAuthenticated, async(req, res)=>{
         await like.save()
 
         likes = await Likes.find({postId: req.params.id})
-        like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user.id, postId: req.params.id}) : undefined
+        like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
 
          res.json({like: like, likes: likes})
-       // console.log(like)
+        console.log(like)
     }
     //res.redirect(`/${req.params.id}`)
 })
