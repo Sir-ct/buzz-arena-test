@@ -1,26 +1,30 @@
 <%- include("./partials/_header", {loggedIn: loggedIn, user: user}) %>
 
 
-<% if(trend != ""){%>
-  <section class="hero">
-    <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">          
-      <% for(let i=0; i < trend.length; i++){%> 
-      <div class="trending-posts">
-            <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
-            <div class="details">
-              <div class="category">
-                <%=trend[i].categories[0]%>  
+<% if(!loggedIn) {%>
+  <%- include("./partials/_landingpage") %>
+<%} else {%>
+  <% if(trend != ""){%>
+    <section class="hero">
+      <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">          
+        <% for(let i=0; i < trend.length; i++){%> 
+        <div class="trending-posts">
+              <div class="imgdiv"><img src="<%= trend[i].bannerPath%>" alt=""></div>
+              <div class="details">
+                <div class="category">
+                  <%=trend[i].categories[0]%>  
+                </div>
+                <a href="/<%= trend[i].id%>"><div class="detail-header">
+                  <%= trend[i].title.substring(0, 49)%>
+                </div></a>
+                <div class="dets"><%= trend[i].author%> . <%= trend[i].createdAt.toDateString()%></div>
               </div>
-              <a href="/<%= trend[i].id%>"><div class="detail-header">
-                <%= trend[i].title%>
-              </div></a>
-              <div class="dets"><%= trend[i].author%> . <%= trend[i].createdAt.toDateString()%></div>
-            </div>
-          </div>  
-          <%}%>      
-    </div>
-   </section>
-<%}%>
+            </div>  
+            <%}%>      
+      </div>
+     </section>
+  <%}%>
+
 
        <section class="articles-section">
          <div class="articlescover">
@@ -53,8 +57,8 @@
           <div class="popular-post-main-cont">
            <h2 class="popular-posts-header">Popular Posts</h2>
            <div class="popular-posts-cont">  
-            <%if(popular){%>
-             <% for(let i=0; i< popular.length ; i++){%>
+
+             <% for(let i=0; i < popular.length; i++){%>
                
               <div class="popular-posts">
                 <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
@@ -63,16 +67,29 @@
                   <p class="ppd">By <%= popular[i].author %> on <%= popular[i].createdAt.toDateString()%></p>
                 </div>
               </div>
-             <%}%>
+            
             <% } %>
  
            </div>
           </div>
 
-          <%- include("./partials/_about") %>
+          <div class="about" id="about">
+            <h2 class="about-header">About THE_HOOD_R</h2>
+            <p class="about-details">
+              The Brand consist of the New Generation of inventive Thinkers, ones with the wildest imaginations to bring dreams, to actuality.
+            </p>
+            <div class="socialicons">
+             <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+             <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+             <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+             <a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
+             <a href="#"><ion-icon src="./images/Hood-svg.svg"></ion-icon></a>
+           </div>
+          </div>
 
         </div>
       </section>
+<%}%>
 
       <script src="/js/mobilenav.js"></script>
 

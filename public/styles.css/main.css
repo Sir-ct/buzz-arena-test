@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Moo+Lah+Lah&family=Noto+Serif:wght@700&family=Permanent+Marker&family=Roboto:ital,wght@0,300;0,700;1,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Secular+One&display=swap');
 body{
     padding: 0;
     margin: 0;
@@ -178,6 +179,7 @@ a{
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 1fr;
 }
+
 .trending-posts{
     position: relative;
     height: calc(550px/2);
@@ -187,25 +189,26 @@ a{
     grid-row-start: 1;
     grid-row-end: 3;
 }
-.details{
-    width: 70%;
+ .details{
+    width: 90%;
     padding: 0px 5%;
     position: absolute;
     bottom: 20px;
     font-weight: 700;
 }
-.imgdiv{
+ .imgdiv{
     width: 100%;
     height: 100%;
     object-fit: cover;
  }
  .imgdiv img{
-     filter: brightness(30%);
- }
+    filter: brightness(30%);
+}
+
 .category{
-    width: 10vw;
+    max-width: 10vw;
     padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     background-color: purple;
     color: white;
@@ -215,6 +218,9 @@ a{
     color: white;
     text-transform: capitalize;
     font-family: 'Noto Serif', serif;
+}
+.detail-header:hover{
+    color: black;
 }
 .dets{
     color: grey;
@@ -465,7 +471,7 @@ footer button{
     }
 }
 
-@media(max-width: 700px){
+@media(max-width: 750px){
     .socialicons{
         display: none;
     }
@@ -573,6 +579,9 @@ footer button{
         margin: auto;
         display: flex;
         flex-direction: column;
+    }
+    .details{
+        width: 90%;
     }
     .trending-posts{
         position: relative;

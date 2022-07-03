@@ -65,21 +65,37 @@ port = process.env.PORT || 5000
 
 // index route
 app.get("/", async (req, res)=>{ 
-    let trending = await NewArticle.find({status: "trending"}).limit(3)
+    let trending = !req.isAuthenticated() ? await NewArticle.find({status: "trending"}).limit(6) : await NewArticle.find({status: "trending"}).limit(3)
     let totalposts = await NewArticle.count()
     let postsperpage = 12
     let page = req.query.page || 1
     let skipposts = postsperpage * (page - 1)
     let articles = await NewArticle.find().sort({createdAt: -1}).skip(skipposts).limit(postsperpage)
     let popposts = await NewArticle.find().sort({views: -1}).limit(6)
+    let tpostauthors
+    let landpageauthors
+    let landpageauthorsarr = []
+    let tpostauthorsarr = []
+
+    for(let i = 0; i < trending.length; i++){
+        tpostauthors = await Users.findOne({mail: trending[i].authorMail}) ? await Users.findOne({mail: trending[i].authorMail}) :  await Gusers.findOne({mail: trending[i].authorMail})
+        tpostauthorsarr.push(tpostauthors)
+    }
+
+    for(let i = 0; i < articles.length; i++){
+        landpageauthors = await Users.findOne({mail: articles[i].authorMail}) ? await Users.findOne({mail: articles[i].authorMail}) :  await Gusers.findOne({mail: articles[i].authorMail})
+        landpageauthorsarr.push(landpageauthors)
+    }
     
 if(req.isAuthenticated()){
-    res.render("index", {articles: articles, popular: popposts, loggedIn: true, user: req.user, totalposts: totalposts, currentpage: page, trend: trending})
+    res.render("index", {articles: articles, popular: popposts, loggedIn: true, user: req.user, totalposts: totalposts, currentpage: page, trend: trending, tpostauthor: tpostauthorsarr, landpageauthors: landpageauthorsarr})
  }else {
     
-    res.render("index", {articles: articles, popular: popposts, loggedIn: false, user: req.user, totalposts: totalposts, currentpage: page, trend: trending})
+    res.render("index", {articles: articles, popular: popposts, loggedIn: false, user: req.user, totalposts: totalposts, currentpage: page, trend: trending, tpostauthor: tpostauthorsarr, landpageauthors: landpageauthorsarr})
  }
+ //console.log(req.rawHeaders[1])
 })
+
 
 // categories route
 app.get("/categories/:cat", async (req, res)=>{
@@ -185,28 +201,32 @@ app.get("/:id",  async (req, res)=>{
         let article = await NewArticle.findById(req.params.id)
         let comments = await Comments.find({postId: req.params.id})
         let likes = await Likes.find({postId: req.params.id})
-        let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefinedd
+        let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
         let commentsauthors
         let commentsauthorsarr = []
         for(let i = 0; i < comments.length; i++){
-            commentsauthors = await Users.findOne({mail: comments[i].authorEmail})
+            commentsauthors = await Users.findOne({mail: comments[i].authorEmail}) || await Gusers.findOne({mail: comments[i].authorEmail})
             commentsauthorsarr.push(commentsauthors)
         }
-        console.log(commentsauthorsarr)
+    
         
         article.views += 1
         article.save()
         if(req.isAuthenticated()){
-            res.render("article", {article: article, loggedIn: true, user: req.user, popular: popposts, comments: comments, commentauthor: commentsauthorsarr, likes: likes, like: like})
-            }else{
-                res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, comments: comments,  commentauthor: commentsauthorsarr, likes: likes, like: like})
-            }
+       return res.render("article", {article: article, loggedIn: true, user: req.user,
+             popular: popposts, comments: comments, 
+             commentauthor: commentsauthorsarr, likes: likes, like: like})
+        }else{
+          res.render("article", {article: article, loggedIn: false, user: req.user, popular: popposts, 
+                comments: comments,
+                 commentauthor: commentsauthorsarr, likes: likes, like: like})
+        }
     
     } catch{
         
         res.redirect("/")
     }
-})
+    })
 
  //google login auth
 app.get('/auth/google',

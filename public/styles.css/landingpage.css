@@ -1,0 +1,242 @@
+/*begining of landing page styles*/
+.hero-text{
+    color: white; /*add*/
+}
+.hero-text h1{
+    font-size: 120px;
+    font-family: 'Secular One', sans-serif;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.hero-text .herosubhead{
+    font-size: 45px;
+    font-family: 'Secular One', sans-serif;
+}
+.get-started{
+    width: 40%;
+    height: 30px;
+    padding: 10px;
+    margin-top: 15px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    background-color: rgb(245, 231, 38);
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 20px;
+}
+.hero-img{
+    width: 600px;
+    height: 500px;
+}
+.hero-img img{
+    width: 100%;
+    opacity: 0.8;
+}
+
+.guest-trending-cover{
+    width: 90%;
+    margin: auto;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 5% 0;
+}
+.guest-trending-posts{
+    margin: 20px 2px;
+    display: flex;
+}
+.guest-trending-author{
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+.guest-trending-author img{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.guest-trending-detail-header{
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: rgb(0, 0, 0);
+}
+.guest-trending-grey{
+    color: rgb(180, 170, 170);
+}
+.guest-trending h1{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    font-size: 20px;
+}
+
+/**/
+.guest-post-section{
+    padding: 40px 0;
+    border-top: 1px dashed rgb(236, 209, 209);
+}
+.guest-post-wrap{
+    width: 90%;
+    display: flex;
+    margin: auto;
+    text-transform: capitalize;
+}
+.landing-page-post{
+    width: 80%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0px;
+}
+.landing-page-details{
+    width: 50%;
+}
+.landing-page-author{
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+.landing-page-author img{
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.landing-page-details .headone{
+    font-size: 25px;
+    margin: 10px 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: black;
+}
+.landing-page-details p{
+    font-size: 16px;
+    font-weight: 500;
+}
+.guest-date{
+    display: flex;
+    align-items: center;
+}
+.guest-date div{
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 10px;
+    display: flex;
+    align-self: center;
+    background-color: rgb(243, 236, 236);
+}
+.guest-date span{
+    margin-right: 5px;
+}
+.landing-page-banner{
+    width: 250px;
+    height: 200px;
+}
+.landing-page-banner img{
+    width: 100%;
+    height: 100%;
+}
+.guest-interest{
+    display: inline-block;
+    padding: 5px 20px;
+    margin-top: 5px;
+    border-radius: 50px;
+    border: 1px solid grey;
+}
+.guest-possible-interests{
+    padding-bottom: 40px;
+    border-bottom: 2px solid rgb(236, 209, 209);
+}
+.guest-possible-interests h2{
+    font-size: 22px;
+}
+
+@media(max-width: 1160px){
+    .hero-text h1{
+        font-size: 100px;
+        line-height: 1;
+    }
+    .hero-text .herosubhead{
+      line-height: 1;
+    }
+    .get-started{
+        font-size: 18px;
+    }
+}
+
+@media(max-width: 980px){
+    .hero-img{
+        width: 400px;
+        height: 500px;
+    }
+    
+}
+
+@media(max-width: 770px){ /* main mobile screen*/
+    .hero-cover{
+        flex-direction: column-reverse;
+    }
+    .guest-trending-cover{
+        display: flex;
+        flex-direction: column;
+    }
+    .guest-trending-posts{
+        margin: 20px 2px;
+        display: flex;
+    }
+    .landing-page-post{
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin: 30px 0px;
+    }
+    .landing-page-post .guest-trending-grey{
+        display: none;
+    }
+    .landing-page-author img{
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+        border-radius: 50%;
+    }
+    .landing-page-details .headone{
+        font-size: 18px;
+    }
+    .landing-page-banner{
+        width: 150px;
+        height: 100px;
+    }
+    .guest-post-wrap{
+        display: flex;
+       flex-direction: column-reverse;
+    }
+}
+
+@media(max-width: 570px){
+    .hero-cover{
+        display: block;
+    }
+    .hero-img{
+       display: none;
+    }
+    .hero-text h1{
+        font-size: 80px;
+        line-height: 1.5;
+        margin-top: 0;
+    }
+    .hero-text .herosubhead{
+      font-size: 35px;
+      line-height: 1.5;
+    }
+    .get-started{
+        width: 60%;
+        font-size: 18px;
+    }
+}
+
+ 
+
+ /*end of landing page styles*/
