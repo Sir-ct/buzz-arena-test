@@ -19,7 +19,7 @@
         <div class="guest-trending-posts">
               <div class="guest-trending-details">
                 <div class="guest-trending-author">
-                  <% if(tpostauthor[i]){%>
+                  <% if(tpostauthor[i] && tpostauthor[i].profileImgPath){%>
                     <img src="<%= tpostauthor[i].profileImgPath %>" alt="profile picture">
                   <%} else {%>
                     <img src="/images/User.jpg" alt="profile picture">
@@ -47,7 +47,7 @@
         <div class="landing-page-post">
          <div class="landing-page-details">
           <div class="landing-page-author">
-            <% if(landpageauthors[i]){%>
+            <% if(landpageauthors[i] && landpageauthors[i].profileImgPath){%>
               <img src="<%= landpageauthors[i].profileImgPath %>" alt="profile picture">
             <%} else {%>
               <img src=/images/User.jpg alt="profile picture">
