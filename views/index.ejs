@@ -2,7 +2,7 @@
 
 
 <% if(!loggedIn) {%>
-  <%- include("./partials/_landingpage", {landpageauthors: landpageauthors}) %>
+  <%- include("./partials/_landingpage") %>
 <%} else {%>
   <% if(trend != ""){%>
     <section class="hero">
