@@ -20,9 +20,9 @@
               <div class="guest-trending-details">
                 <div class="guest-trending-author">
                   <% if(tpostauthor[i]){%>
-                    <img src=<%= tpostauthor[i].profileImgPath %> alt="profile picture">
+                    <img src="<%= tpostauthor[i].profileImgPath %>" alt="profile picture">
                   <%} else {%>
-                    <img src=/images/User.jpg alt="profile picture">
+                    <img src="/images/User.jpg" alt="profile picture">
                   <%}%>
                   <%= trend[i].author%> 
                 </div>
@@ -48,7 +48,7 @@
          <div class="landing-page-details">
           <div class="landing-page-author">
             <% if(landpageauthors[i]){%>
-              <img src=<%= landpageauthors[i].profileImgPath %> alt="profile picture">
+              <img src="<%= landpageauthors[i].profileImgPath %>" alt="profile picture">
             <%} else {%>
               <img src=/images/User.jpg alt="profile picture">
             <%}%>
