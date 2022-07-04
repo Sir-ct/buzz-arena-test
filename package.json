@@ -30,6 +30,7 @@
     "mongoose": "^6.1.2",
     "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "showdown": "^1.9.1"
   },
