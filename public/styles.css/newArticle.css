@@ -99,6 +99,9 @@ label.article-image-upload{
     justify-content: space-around;
 }
 @media(max-width: 700px){
+    .image-upload{
+        height: 20vh;
+    }
     .admin-panel-wrap{
        flex-direction: column;
     }
