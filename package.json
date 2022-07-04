@@ -7,9 +7,6 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "engines": {
-    "node": "15.2.1"
-  },
   "keywords": [
     "crypto"
   ],
