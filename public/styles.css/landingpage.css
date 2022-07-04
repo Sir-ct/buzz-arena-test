@@ -217,7 +217,7 @@
 
 @media(max-width: 570px){
     .hero-cover{
-        display: block;
+        justify-content: center;
     }
     .hero-img{
        display: none;
