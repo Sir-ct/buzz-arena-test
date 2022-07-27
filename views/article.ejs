@@ -18,7 +18,7 @@
     </div>
    <div class="interactions">
     <%if(loggedIn == true){%>
-      <form class="like" id="like" action="/like/<%= article.id %>" method="post" onsubmit="jstlog()" >
+      <form class="like" id="like" action="/like/<%= article.id %>" method="post" >
         <button id="likebtn">
          <% if(like != null){%>
           <ion-icon name="thumbs-up" class="like-img" id="likeicon"></ion-icon>
