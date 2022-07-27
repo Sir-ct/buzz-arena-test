@@ -127,8 +127,6 @@
           }
         }).then((res)=> res.json()).then((data)=>{
          
-          
-
           if(data.like != null){
             likebtn.innerHTML = ` <ion-icon name="thumbs-up" class="like-img" id="likeicon"></ion-icon>`
           }else{
@@ -142,10 +140,10 @@
           }else{
             likecount.innerHTML = ""
           }
-        })
-
-      }).catch((error)=>{
+        }).catch((error)=>{
         console.log(error)
+      })
+
       })
 
     } 
