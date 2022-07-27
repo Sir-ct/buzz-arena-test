@@ -747,20 +747,18 @@ app.post("/like/:id", userAuthenticated, async(req, res)=>{
     let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
 
     if(!like){
-        like = new Likes({
+        let newlike = new Likes({
             likerId: req.user._id,
             likerName: `${req.user.fname} ${req.user.lname}`,
             postId: req.params.id
         })
 
-        await like.save()
+        await newlike.save()
 
         likes = await Likes.find({postId: req.params.id})
         like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
 
-         res.json({like: like, likes: likes})
-        console.log(like)
-
+       
         //
     } else{
         console.log(like + ": to be deleted")
@@ -768,10 +766,10 @@ app.post("/like/:id", userAuthenticated, async(req, res)=>{
 
         likes = await Likes.find({postId: req.params.id})
         like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
-
-       res.json({like: like, likes: likes})
      
     }
+
+    res.json({like: like, likes: likes})
     //res.redirect(`/${req.params.id}`)
 })
 //delete post
