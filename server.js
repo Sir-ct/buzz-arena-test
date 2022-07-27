@@ -744,7 +744,7 @@ app.post("/like/:id", userAuthenticated, async(req, res)=>{
     console.log(req.user, req.params.id)
   
     let likes = await Likes.find({postId: req.params.id})
-    let like = req.isAuthenticated() ? await Likes.find({likerId: req.user._id, postId: req.params.id}) : undefined
+    let like = req.isAuthenticated() ? await Likes.findOne({likerId: req.user._id, postId: req.params.id}) : undefined
 
     if(!like){
         let newlike = new Likes({
