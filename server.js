@@ -22,6 +22,8 @@ const { error } = require("console");
 const methodOverride = require("method-override")
 const {userAuthenticated, userIsAdmin, userIsSuperAdmin} = require("./config/auth");
 const { getMaxListeners } = require("process");
+const fs = require("fs")
+const AWS = require('aws-sdk');
 
 
 
@@ -32,7 +34,13 @@ const app = express();
 let mongoString = process.env.MONGODB_URI 
 mongoose.connect(mongoString) // hide this later
 
+//configuring the AWS environment
+AWS.config.update({
+    accessKeyId: process.env.AWS_KEY_ID,
+    secretAccessKey: process.env.AWS_SAK
+  });
 
+  var s3 = new AWS.S3();
 
 const staticpath ="public"
 
@@ -321,9 +329,43 @@ app.post("/logout", (req, res)=>{
     res.redirect("/")
     
 })
+//adding images inside article
+app.post("/inarticleimg", async (req, res)=>{
+    console.log(req.files)
+   
+      let file = req.files.file
+       let date = new Date()
+       let aimg = date.getDate() + date.getTime() + file.name
+       let aimgdir = path.join(staticpath,  `/uploads/${aimg}`)
+       file.mv(aimgdir, (err, results)=>{
+           console.log(results)
+       })
+   
+   //configuring parameters
+   var params = {
+     Bucket: 'buzzarena-media-bucket',
+     Body : fs.createReadStream(aimgdir),
+     Key : "folder/"+Date.now()+"_"+req.files.file.name
+   };
+   
+   s3.upload(params, function (err, data) {
+     //handle error
+     if (err) {
+       console.log("Error", err);
+     }
+   
+     //success
+     if (data) {
+       console.log("Uploaded in:", data.Location);
+       res.json({location: data.Location})
+     }
+   });
+   
+   })
 // posting articles route
 app.post("/newArticle", async (req, res)=>{
 
+    let bannerimgpath;
 //handling sending back file path for immediate use in frontend
 console.log(req.files)
    if(req.files == null){
@@ -338,7 +380,13 @@ console.log(req.files)
         console.log(results)
     })
     
-   
+//configuring aws parameters
+var params = {
+    Bucket: 'buzzarena-media-bucket',
+    Body : fs.createReadStream(bannerdir),
+    Key : "folder/"+Date.now()+"_"+file.name
+  };
+
     // validating inputs
     if(req.body.title =="" || req.body.title < 5){
         articleUploadError("Title is not long enough", req.body)
@@ -370,27 +418,42 @@ else if(givenmail.isauthor == false){
 }
   else{  
     
-    //setting article
-    let newarticle = new NewArticle({
-        title: req.body.title,
-        description: req.body.description,
-        content: req.body.content,
-        categories: req.body.category,
-        bannerPath: `/uploads/${banner}`,
-        views: 0,
-        author: `${givenmail.fname} ${givenmail.lname}`,
-        authorMail: `${givenmail.mail}`,
-        authorId: `${givenmail.id}`
-    })
+    s3.upload(params, async (err, data) =>{
+        //handle error
+        if (err) {
+          console.log("Error", err);
+        }
+      
+        //success
+        if (data) {
+          console.log("Uploaded in:", data);
+          bannerimgpath = data.Location
+          console.log("bannerimage path:"+bannerimgpath)
 
-try{
-    newarticle = await newarticle.save()
-    res.redirect(`/${newarticle.id}`)
-    console.log(newarticle)
-}catch (e){
-   articleUploadError("fill in the fields properly", req.body)
-  
-}
+          console.log(req.body.content, bannerimgpath)
+          //setting article
+          let newarticle = new NewArticle({
+              title: req.body.title,
+              description: req.body.description,
+              content: req.body.content,
+              categories: req.body.category,
+              bannerPath: bannerimgpath,
+              views: 0,
+              author: `${givenmail.fname} ${givenmail.lname}`,
+              authorMail: `${givenmail.mail}`,
+              authorId: `${givenmail.id}`
+          })
+      
+      try{
+          newarticle = await newarticle.save()
+          res.redirect(`/${newarticle.id}`)
+          console.log(newarticle)
+      }catch (err){
+         console.log(err)
+        
+      }
+        }
+    })
 }
 }
 }

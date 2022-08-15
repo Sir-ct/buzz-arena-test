@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="/styles.css/landingpage.css" >
     <link rel="icon" type="image/png" sizes="32x32" href="/images/Hood-logo.png">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#n-a-c',
+        plugins: "autolink list link image",
+        file_picker_types: 'file image media',
+        a11y_advanced_options: true,
+        images_upload_url: '/inarticleimg',
+      });
+    </script>
     <title>Buzz-Arena</title>
 </head>
 <body>
