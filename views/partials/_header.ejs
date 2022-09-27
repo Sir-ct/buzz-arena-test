@@ -17,7 +17,7 @@
     <script>
       tinymce.init({
         selector: '#n-a-c',
-        plugins: "autolink list link image",
+        plugins: "autolink lists advlist link image",
         file_picker_types: 'file image media',
         a11y_advanced_options: true,
         images_upload_url: '/inarticleimg',
@@ -78,21 +78,17 @@
           <div class="welcome-div">
             <div class="welcome-text" id="welcome-txt">Hi, <%= user.fname%></div>
             <div class="welcome-menu" id="welcome-mnu">
-              <% if(user.isadmin == false && user.isauthor == false){%>
-                <div class="dashboard-btn"><a href="/userdashboard">Profile</div>
-                <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
-              <%}%>
+                <div class="dashboard-btn"><a href="/userdashboard">Profile</a> <div><ion-icon name="person"></ion-icon></div></div>
+                <div class="dashboard-btn"><a href="/updateprofile">Settings</a> <div><ion-icon name="cog"></ion-icon></div></div>
               <% if(user.isadmin || user.issuperadmin){%>
-                <div class="dashboard-btn"><a href="/newArticle"> Panel </a></div>
-                <div class="dashboard-btn"><a href="/userdashboard">Dashboard</a></div>
-                <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
+                <div class="dashboard-btn"><a href="/newArticle"> Panel </a> <div><ion-icon name="desktop"></ion-icon></div> </div>
               <% } %>
               <%if(user.isauthor && !user.isadmin){ %>
-                <div class="dashboard-btn"><a href="/userdashboard">Dashboard</a></div>
-                <div class="dashboard-btn"><a href="/updateprofile">Update Profile</a></div>
+                <div class="dashboard-btn"><a href="/newArticle"> Write </a> <div><ion-icon name="pencil"></ion-icon></div> </div>
               <%}%>
               <form action="/logout" method="post">
                 <button>logout</button>
+                <div><ion-icon name="log-out"></ion-icon></div>
               </form>
             </div>
           </div>

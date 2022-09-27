@@ -9,8 +9,10 @@
     margin-bottom: 0;
 }
 .hero-text .herosubhead{
-    font-size: 45px;
-    font-family: 'Secular One', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    color:rgb(180, 170, 170);
+    font-family: 'Inter', sans-serif;
 }
 .get-started{
     width: 40%;
@@ -179,6 +181,9 @@
     .hero-cover{
         flex-direction: column-reverse;
     }
+    .hero-img{
+        display: none;
+    }
     .guest-trending-cover{
         display: flex;
         flex-direction: column;
@@ -204,6 +209,7 @@
     }
     .landing-page-details .headone{
         font-size: 18px;
+        margin: 0;
     }
     .landing-page-banner{
         width: 150px;
@@ -219,16 +225,14 @@
     .hero-cover{
         justify-content: center;
     }
-    .hero-img{
-       display: none;
-    }
     .hero-text h1{
-        font-size: 80px;
-        line-height: 1.5;
+        font-size: 65px;
+        line-height: 1;
         margin-top: 0;
     }
     .hero-text .herosubhead{
-      font-size: 35px;
+      font-size: 20px;
+      font-weight: 200;
       line-height: 1.5;
     }
     .get-started{

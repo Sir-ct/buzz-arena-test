@@ -7,6 +7,7 @@
             <%- include("./partials/_articleForm") %>
         </section>
 
+       <%if(user.isadmin) {%>
         <div class="admin-panel">
             <h1 id="panel">Control Panel</h1>
             <div class="admin-panel-wrap" id="panelwrap">
@@ -101,6 +102,9 @@
 
             </div>
         </div>
+
+        <%}%>
+    
     </div>
     <script>
         let panel = document.getElementById("panel")

@@ -1,78 +1,78 @@
 <section class="hero">
-    <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">          
-            <div class="hero-text">
-                <h1>Let loose!</h1>
-                <span class="herosubhead">This is your Arena,</span> <br /> <span style="font-weight: 600;"> the world is watching</span>
-                <a href="/register"><div class="get-started">Join the Action</div></a>
+  <div class="hero-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">          
+          <div class="hero-text">
+              <h1>Let loose!</h1>
+              <p class="herosubhead">This is your Arena, the world is watching</p>
+              <a href="/register"><div class="get-started">Join the Action</div></a>
+          </div>
+          <div class="hero-img">
+              <img src="/images/colosseum.jpg" alt="colosseum">
+          </div>
+  </div>
+ </section>
+
+ <% if(trend != ""){%>
+  <section class="guest-trending">
+    <div class="guest-trending-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">  
+      <h1>Here's What's Buzzing</h1>        
+      <% for(let i=0; i < trend.length; i++){%> 
+      <div class="guest-trending-posts">
+            <div class="guest-trending-details">
+              <div class="guest-trending-author">
+                <% if(tpostauthor[i] && tpostauthor[i].profileImgPath){%>
+                  <img src="<%= tpostauthor[i].profileImgPath %>" alt="profile picture">
+                <%} else {%>
+                  <img src="/images/User.jpg" alt="profile picture">
+                <%}%>
+                <%= trend[i].author%> 
+              </div>
+          
+              <a href="/<%= trend[i].id%>" ><h1 class="guest-trending-detail-header">
+                <%= trend[i].title%>
+              </h1></a>
+              <div class="guest-trending-grey">
+                <%= trend[i].createdAt.toLocaleString('default', {month: "short"})%>  <%= trend[i].createdAt.getDate()%>  .  <%=trend[i].categories[0]%>  
+              </div>
             </div>
-            <div class="hero-img">
-                <img src="/images/colosseum.jpg" alt="colosseum">
-            </div>
+          </div>  
+          <%}%>      
     </div>
    </section>
+<%}%>
 
-   <% if(trend != ""){%>
-    <section class="guest-trending">
-      <div class="guest-trending-cover" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">  
-        <h1>Here's What's Buzzing</h1>        
-        <% for(let i=0; i < trend.length; i++){%> 
-        <div class="guest-trending-posts">
-              <div class="guest-trending-details">
-                <div class="guest-trending-author">
-                  <% if(tpostauthor[i] && tpostauthor[i].profileImgPath){%>
-                    <img src="<%= tpostauthor[i].profileImgPath %>" alt="profile picture">
-                  <%} else {%>
-                    <img src="/images/User.jpg" alt="profile picture">
-                  <%}%>
-                  <%= trend[i].author%> 
-                </div>
-            
-                <a href="/<%= trend[i].id%>" ><h1 class="guest-trending-detail-header">
-                  <%= trend[i].title%>
-                </h1></a>
-                <div class="guest-trending-grey">
-                  <%= trend[i].createdAt.toLocaleString('default', {month: "short"})%>  <%= trend[i].createdAt.getDate()%>  .  <%=trend[i].categories[0]%>  
-                </div>
-              </div>
-            </div>  
-            <%}%>      
+<section class="guest-post-section">
+  <div class="guest-post-wrap">
+   <div>
+    <% for(let i=0; i < articles.length; i++){%>
+      <div class="landing-page-post">
+       <div class="landing-page-details">
+        <div class="landing-page-author">
+          <% if(landpageauthors[i] && landpageauthors[i].profileImgPath){%>
+            <img src="<%= landpageauthors[i].profileImgPath %>" alt="profile picture">
+          <%} else {%>
+            <img src=/images/User.jpg alt="profile picture">
+          <%}%>
+          <h4><%= articles[i].author%> </h4>
+        </div>
+        <a href="/<%= articles[i].id%>"><div class="headone"> <%= articles[i].title.substring(0, 49)%> </div></a>
+        <p class="guest-trending-grey"><%= articles[i].description %></p>
+        <div class="guest-date"><span>Jun 12</span> . <div class="guest-cat"> sports</div></div>
+       </div>
+       <div class="landing-page-banner">
+        <img src="<%= articles[i].bannerPath%>" alt="">
+       </div>
       </div>
-     </section>
-  <%}%>
+    <%}%>
+   </div>
 
-  <section class="guest-post-section">
-    <div class="guest-post-wrap">
-     <div>
-      <% for(let i=0; i < articles.length; i++){%>
-        <div class="landing-page-post">
-         <div class="landing-page-details">
-          <div class="landing-page-author">
-            <% if(landpageauthors[i] && landpageauthors[i].profileImgPath){%>
-              <img src="<%= landpageauthors[i].profileImgPath %>" alt="profile picture">
-            <%} else {%>
-              <img src=/images/User.jpg alt="profile picture">
-            <%}%>
-            <h4><%= articles[i].author%> </h4>
-          </div>
-          <a href="/<%= articles[i].id%>"><div class="headone"> <%= articles[i].title.substring(0, 49)%> </div></a>
-          <p class="guest-trending-grey"><%= articles[i].description %></p>
-          <div class="guest-date"><span>Jun 12</span> . <div class="guest-cat"> sports</div></div>
-         </div>
-         <div class="landing-page-banner">
-          <img src="<%= articles[i].bannerPath%>" alt="">
-         </div>
-        </div>
-      <%}%>
-     </div>
-
-      <div class="guest-possible-interests">
-        <h2>These topics might interest you</h2>
-        <div class="interests-wrap">
-          <a href="/categories/buzz" class="guest-interest">Buzz</a>
-          <a href="/categories/sports" class="guest-interest">Sports</a>
-          <a href="/categories/tech" class="guest-interest">Tech</a>
-          <a href="/categories/fashion" class="guest-interest">Fashion</a>
-        </div>
+    <div class="guest-possible-interests">
+      <h2>These topics might interest you</h2>
+      <div class="interests-wrap">
+        <a href="/categories/buzz" class="guest-interest">Buzz</a>
+        <a href="/categories/sports" class="guest-interest">Sports</a>
+        <a href="/categories/tech" class="guest-interest">Tech</a>
+        <a href="/categories/fashion" class="guest-interest">Fashion</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
