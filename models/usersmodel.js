@@ -19,7 +19,7 @@ let userschema = new mongoose.Schema({
     },
     isauthor:{
         type: Boolean,
-        default: false
+        default: true
     },
     isadmin:{
         type: Boolean,

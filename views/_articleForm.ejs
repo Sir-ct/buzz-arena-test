@@ -1,5 +1,12 @@
+<%- include("./partials/_header")%>
 
-<form action="/newArticle" method="post" enctype="multipart/form-data">
+<% if(msg){%>
+    <p><%= msg %></p>
+<%}%>
+
+<section id="write-article">
+    
+<form action="/pendingArticle" method="post" enctype="multipart/form-data">
     <div class="image-upload">
         <input type="file" name="bannerimage" id="article-banner" accept="image/*">
         <label for="article-banner" class="article-image-upload"><ion-icon name="cloud-upload-outline"></ion-icon></label>
@@ -28,7 +35,7 @@
 
       <div class="author">
         <h3>Enter Author's Email</h3>
-        <input type="email" name="authormail" placeholder="enter author's email">
+        <input type="email" name="authormail" placeholder="enter author's email" value="<%=user.mail%>">
       </div>
 
     <div class="post-btns">
@@ -38,3 +45,7 @@
     </div>
 </div>
 </form>
+
+</section>
+
+<%- include("./partials/_footer")%>

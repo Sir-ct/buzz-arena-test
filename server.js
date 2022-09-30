@@ -187,19 +187,28 @@ app.get("/passwordreset/:token/:userid", (req, res)=>{
 })
 
 //create article route
-app.get("/newArticle", userAuthenticated, userIsAdmin,  async (req, res)=>{
+app.get("/newArticle", userAuthenticated, (req, res)=>{
+
+    res.render("_articleForm", {msg: "", article: new NewArticle(), loggedIn: true, user: req.user})
+    
+})
+
+//adminpanel get route
+app.get("/admin/Panel", userAuthenticated, userIsAdmin,  async (req, res)=>{
     let posts = await NewArticle.find()
+    let pendingPosts = await PendingArticle.find()
     let users = await Users.find()
     let gusers = await Gusers.find()
     if(req.isAuthenticated()){
-    res.render("newArticle", {msg: "", article: new NewArticle(), posts: posts, users: users, gusers: gusers, loggedIn: true, user: req.user})
+    res.render("adminPanel", {pending: pendingPosts, posts: posts, users: users, gusers: gusers, loggedIn: true, user: req.user})
     }
     else{
-        res.render("newArticle", {msg: "", article: new NewArticle(), posts: posts, users: users, gusers: gusers, loggedIn: false, user: req.user})
+        res.render("adminPanel", {pending: pendingPosts, posts: posts, users: users, gusers: gusers, loggedIn: false, user: req.user})
     }
 })
+
 //edit article route
-app.get("/updatearticle/:id", userIsAdmin, async (req, res)=>{
+app.get("/updatearticle/:id", userAuthenticated, async (req, res)=>{
     let article = await NewArticle.findById(req.params.id)
     res.render("updatearticle", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, article: article, msg: ""})
 })
@@ -362,108 +371,144 @@ app.post("/inarticleimg", async (req, res)=>{
    });
    
    })
-// posting articles route
-app.post("/newArticle", async (req, res)=>{
 
+   //adding article to pending
+app.post("/pendingArticle", userAuthenticated, async(req, res)=>{
     let bannerimgpath;
-//handling sending back file path for immediate use in frontend
-console.log(req.files)
-   if(req.files == null){
-       articleUploadError("this post contains no image", req.body)
-   } 
-   else{
-    let file = req.files.bannerimage
-    let date = new Date()
-    let banner = date.getDate() + date.getTime() + file.name
-    let bannerdir = path.join(staticpath,  `/uploads/${banner}`)
-    file.mv(bannerdir, (err, results)=>{
-        console.log(results)
-    })
-    
-//configuring aws parameters
-var params = {
-    Bucket: 'buzzarena-media-bucket',
-    Body : fs.createReadStream(bannerdir),
-    Key : "folder/"+Date.now()+"_"+file.name
-  };
 
-    // validating inputs
-    if(req.body.title =="" || req.body.title < 5){
-        articleUploadError("Title is not long enough", req.body)
-        }
-        else if(req.body.title.length > 75){
-            articleUploadError("Title is too long", req.body)
-        }
-        else if(req.body.description == "" || req.body.description < 10){
-            articleUploadError("description is not long enough", req.body)
-        }
-        else if(req.body.content =="" || req.body.content < 20){
-            articleUploadError("Article is empty or not long enough", req.body)
-       }
-       else if(!req.body.category){
-           articleUploadError("Article category is not selected", req.body)
-       }
-       else if(!req.body.authormail){
-            articleUploadError("Enter author's email", req.body)
-       }
-        else{
-
-        //checking if email owner is an author
-        let givenmail = await Users.findOne({mail: req.body.authormail}) ? await Users.findOne({mail: req.body.authormail}) : await Gusers.findOne({mail: req.body.authormail})
-        if(givenmail == null){
-            articleUploadError("This email is not Registered", req.body)
-}
-else if(givenmail.isauthor == false){
-    articleUploadError("This User is not an author", req.body)
-}
-  else{  
-    
-    s3.upload(params, async (err, data) =>{
-        //handle error
-        if (err) {
-          console.log("Error", err);
-        }
-      
-        //success
-        if (data) {
-          console.log("Uploaded in:", data);
-          bannerimgpath = data.Location
-          console.log("bannerimage path:"+bannerimgpath)
-
-          console.log(req.body.content, bannerimgpath)
-          //setting article
-          let newarticle = new NewArticle({
-              title: req.body.title,
-              description: req.body.description,
-              content: req.body.content,
-              categories: req.body.category,
-              bannerPath: bannerimgpath,
-              views: 0,
-              author: `${givenmail.fname} ${givenmail.lname}`,
-              authorMail: `${givenmail.mail}`,
-              authorId: `${givenmail.id}`
-          })
-      
-      try{
-          newarticle = await newarticle.save()
-          res.redirect(`/${newarticle.id}`)
-          console.log(newarticle)
-      }catch (err){
-         console.log(err)
+    //handling sending back file path for immediate use in frontend
+    console.log(req.files)
+       if(req.files == null){
+           articleUploadError("this post contains no image", req.body)
+       } 
+       else{
+        let file = req.files.bannerimage
+        let date = new Date()
+        let banner = date.getDate() + date.getTime() + file.name
+        let bannerdir = path.join(staticpath,  `/uploads/${banner}`)
+        file.mv(bannerdir, (err, results)=>{
+            console.log(results)
+        })
         
-      }
-        }
-    })
-}
-}
-}
+        //configuring parameters
+    var params = {
+        Bucket: 'buzzarena-media-bucket',
+        Body : fs.createReadStream(bannerdir),
+        Key : "folder/"+Date.now()+"_"+file.name
+      };
+      
+        // validating inputs
+         
+        if(req.body.title =="" || req.body.title < 5){
+            articleUploadError("Title is not long enough", req.body)
+            }
+            else if(req.body.title.length > 65){
+                articleUploadError("Title is too long", req.body)
+            }
+            else if(req.body.description == "" || req.body.description < 10){
+                articleUploadError("description is not long enough", req.body)
+            }
+            else if(req.body.content =="" || req.body.content < 20){
+                articleUploadError("Article is empty or not long enough", req.body)
+           }
+           else if(!req.body.category){
+               articleUploadError("Article category is not selected", req.body)
+           }
+           else if(!req.body.authormail){
+                articleUploadError("Enter author's email", req.body)
+           }
+            else{
+    
+            //checking if email owner is an author
+            let givenmail = await Users.findOne({mail: req.body.authormail}) ? await Users.findOne({mail: req.body.authormail}) : await Gusers.findOne({mail: req.body.authormail})
+            if(givenmail == null){
+                articleUploadError("This email is not Registered", req.body)
+    }
+    else if(givenmail.isauthor == false){
+        articleUploadError("This User is not an author", req.body)
+    }
+      else{  
+         s3.upload(params, async (err, data) =>{
+            //handle error
+            if (err) {
+                articleUploadError(err.code, req.body)
+              console.log("Error", err);
+            }
+          
+            //success
+            if (data) {
+              console.log("Uploaded in:", data);
+              bannerimgpath = data.Location
+              console.log("bannerimage path:"+bannerimgpath)
+    
+              console.log(req.body.content, bannerimgpath)
+              //setting article
+              let pendingarticle = new PendingArticle({
+                  title: req.body.title,
+                  description: req.body.description,
+                  content: req.body.content,
+                  categories: req.body.category,
+                  bannerPath: bannerimgpath,
+                  views: 0,
+                  author: `${givenmail.fname} ${givenmail.lname}`,
+                  authorMail: `${givenmail.mail}`,
+                  authorId: `${givenmail.id}`
+              })
+          
+          try{
+              pendingarticle = await pendingarticle.save()
+              res.redirect(`/${pendingarticle.id}`)
+              console.log(pendingarticle)
+          }catch (err){
+             console.log(err)
+            
+          }
+            }
+        })
+      
+    }
+    }
+    }
+    
+    async function articleUploadError(emsg, persist){
+        let message = emsg
+        res.render("_articleForm", {msg: message, article: persist, loggedIn: req.isAuthenticated() ? true : false, user: req.user })
+    }
+})
 
-async function articleUploadError(emsg, persist){
-    let posts = await NewArticle.find()
-    let users = await Users.find()
-    let message = emsg
-    res.render("newArticle", {msg: message, article: persist, posts: posts, users: users, gusers: users, loggedIn: req.isAuthenticated() ? true : false, user: req.user })
-}
+// posting articles route
+app.post("/newArticle/:id", userAuthenticated, async (req, res)=>{
+
+    let pending = await PendingArticle.findById(req.params.id)
+
+          //setting article
+      if(pending){
+        let newarticle = new NewArticle({
+            title: pending.title,
+            description: pending.description,
+            content: pending.content,
+            categories: pending.category,
+            bannerPath: pending.bannerPath,
+            views: 0,
+            author: pending.author,
+            authorMail: pending.authorMail,
+            authorId: pending.authorId
+        })
+    
+    try{
+        newarticle = await newarticle.save()
+        await PendingArticle.findByIdAndDelete(pending.id)
+        res.redirect(`/${newarticle.id}`)
+        console.log(newarticle)
+    }catch (err){
+       console.log(err)
+      
+    }
+      }
+    else{
+      res.redirect("/admin/Panel")
+    }
+        
 })
        
  
@@ -645,9 +690,32 @@ app.put("/newArticle/:articleid", async (req, res)=>{
             console.log(results)
         })
 
-        article.bannerPath =  `/uploads/${banner}`
+
+              //configuring parameters
+    var params = {
+        Bucket: 'buzzarena-media-bucket',
+        Body : fs.createReadStream(bannerdir),
+        Key : "folder/"+Date.now()+"_"+file.name
+      };
+
+      s3.upload(params, async (err, data) =>{
+        //handle error
+        if (err) {
+          console.log("Error", err);
+          articleEditError(err.code, req)
+        }
+      
+        //success
+        if (data) {
+          console.log("Uploaded in:", data);
+          article.bannerPath = data.Location
+          console.log("bannerimage path:"+bannerimgpath)
+
+      
 
         await article.save()
+        }
+        })
     }
 
     if(req.body.authormail == ""){
@@ -663,8 +731,8 @@ app.put("/newArticle/:articleid", async (req, res)=>{
             articleEditError("This User is not an author", req)
         }
         else if(givenmail.isauthor){
-            article.author =  `${givenmail.fname} ${givenmail.lname}`
-            article.authorMail =  `${givenmail.mail}`
+            article.author =  `${givenmail.fname} ${givenmail.lname}`,
+            article.authorMail =  `${givenmail.mail}`,
             article.authorId =  `${givenmail.id}`
 
                 await article.save()

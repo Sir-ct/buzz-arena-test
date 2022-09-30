@@ -1,15 +1,24 @@
 <%- include("./partials/_header") %>
 
-<% if(msg){%>
-    <p><%= msg %></p>
-<%}%>
-        <section id="write-article">
-            <%- include("./partials/_articleForm") %>
-        </section>
-
        <%if(user.isadmin) {%>
+
         <div class="admin-panel">
             <h1 id="panel">Control Panel</h1>
+            <div class="pending-posts-wrap">
+                <h2>Pending posts</h2>
+               <% pending.forEach((post)=>{%>
+                <div class="pending-posts">
+                    <h3><%= post.title%></h3>
+                    <span><%= post.author%></span>
+                    <a href="/<%= post.id %>"> read</a>
+                    <div> 
+                        <form action="/newArticle/<%=post.id%>"> 
+                            <button type="submit" >Approve</button>
+                        </form>
+                    </div>
+                </div>
+               <%})%>
+            </div>
             <div class="admin-panel-wrap" id="panelwrap">
                 
                 <div class="createAuthor">

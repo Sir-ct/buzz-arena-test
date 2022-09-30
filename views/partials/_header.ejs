@@ -81,7 +81,7 @@
                 <div class="dashboard-btn"><a href="/userdashboard">Profile</a> <div><ion-icon name="person"></ion-icon></div></div>
                 <div class="dashboard-btn"><a href="/updateprofile">Settings</a> <div><ion-icon name="cog"></ion-icon></div></div>
               <% if(user.isadmin || user.issuperadmin){%>
-                <div class="dashboard-btn"><a href="/newArticle"> Panel </a> <div><ion-icon name="desktop"></ion-icon></div> </div>
+                <div class="dashboard-btn"><a href="/admin/Panel"> Panel </a> <div><ion-icon name="desktop"></ion-icon></div> </div>
               <% } %>
               <%if(user.isauthor && !user.isadmin){ %>
                 <div class="dashboard-btn"><a href="/newArticle"> Write </a> <div><ion-icon name="pencil"></ion-icon></div> </div>
