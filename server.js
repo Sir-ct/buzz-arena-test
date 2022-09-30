@@ -5,6 +5,7 @@ const path = require("path")
 const fileupload = require("express-fileupload")
 const mongoose = require("mongoose")
 const NewArticle = require("./models/articlesmodel");
+const PendingArticle = require("./models/pendingarticles")
 const Users = require("./models/usersmodel")
 const Gusers = require("./models/gusersmodel")
 const Comments = require("./models/commentsmodel")
