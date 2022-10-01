@@ -12,7 +12,7 @@
                     <span><%= post.author%></span>
                     <a href="/<%= post.id %>"> read</a>
                     <div> 
-                        <form action="/newArticle/<%=post.id%>"> 
+                        <form action="/newArticle/<%=post.id%>" method="post"> 
                             <button type="submit" >Approve</button>
                         </form>
                     </div>
