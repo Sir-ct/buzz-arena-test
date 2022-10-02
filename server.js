@@ -945,7 +945,7 @@ app.use((req, res)=>{
     res.redirect("/404")
 })
 
-let sendmail = async function(tomail, sbj, content){
+async function sendmail(tomail, sbj, content){
     let transport = nodemailer.createTransport({
         host: "smtp.zoho.com",
         port: 465,
@@ -972,7 +972,5 @@ let sendmail = async function(tomail, sbj, content){
         }
     })
 }
-
-module.exports = sendmail()
 
 app.listen(port)

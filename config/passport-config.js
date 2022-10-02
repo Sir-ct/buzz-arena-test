@@ -6,7 +6,7 @@ const GoogleStrategy = require( 'passport-google-oauth20' ).Strategy;
 //user model
 const User = require("../models/usersmodel")
 const Guser = require("../models/gusersmodel")
-const sendmail = require("../server")
+
 
 
 function initialize(passport){
@@ -78,6 +78,34 @@ function initialize(passport){
     })
     passport.deserializeUser((user, done)=>{
         done(null, user)
+    })
+}
+
+async function sendmail(tomail, sbj, content){
+    let transport = nodemailer.createTransport({
+        host: "smtp.zoho.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "welcome@buzzarena.net",
+          pass: process.env.MAIL_PASS
+        },
+        ignoreTLS: true,
+      });
+
+    let message = {
+        from: 'welcome@buzzarena.net',
+        to: tomail,
+        subject: sbj,
+        html: content
+    }
+
+    await transport.sendMail(message, (err, info)=>{
+        if(err){
+            console.log(err)
+        } else{
+            console.log(info)
+        }
     })
 }
 
