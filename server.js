@@ -973,5 +973,6 @@ let sendmail = async function(tomail, sbj, content){
     })
 }
 
-module.exports = sendmail
+module.exports = sendmail()
+
 app.listen(port)
