@@ -63,7 +63,7 @@ function initialize(passport){
                     <a href="buzz-arena-test.herokuapp.com/login"> Login </a>
                 </p>
             `
-                sendmail(req.body.email, "Welcome to the hood", regmail)
+                sendmail(user.email, "Welcome to the hood", regmail)
 
                  await user.save()
                  console.log(`user is not registered already regigistering now ${user}`)
