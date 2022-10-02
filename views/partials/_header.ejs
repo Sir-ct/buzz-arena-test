@@ -83,7 +83,7 @@
               <% if(user.isadmin || user.issuperadmin){%>
                 <div class="dashboard-btn"><a href="/admin/Panel"> Panel </a> <div><ion-icon name="desktop"></ion-icon></div> </div>
               <% } %>
-              <%if(user.isauthor && !user.isadmin){ %>
+              <%if(user.isauthor){ %>
                 <div class="dashboard-btn"><a href="/newArticle"> Write </a> <div><ion-icon name="pencil"></ion-icon></div> </div>
               <%}%>
               <form action="/logout" method="post">

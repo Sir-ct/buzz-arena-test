@@ -10,8 +10,18 @@
                 <div class="pending-posts">
                     <h3><%= post.title%></h3>
                     <span><%= post.author%></span>
-                    <a href="/<%= post.id %>"> read</a>
+                    <a href="/pending/<%= post.id %>"> read</a>
                     <div> 
+                        <div id="discard-show">
+                            Discard
+                        </div>
+                        <form class="discard" id="discard" action="/discardpending/<%=post.id%>?_method=DELETE" method="post" style="display: none;">
+                           <p>Are you sure you want to discard this article?</p>
+                            <button>
+                                Discard
+                            </button>
+                            <div id="cancel">cancel</div>
+                          </form>
                         <form action="/newArticle/<%=post.id%>" method="post"> 
                             <button type="submit" >Approve</button>
                         </form>
@@ -119,8 +129,22 @@
         let panel = document.getElementById("panel")
         let panelwrap = document.getElementById("panelwrap")
 
+        let discardShow = document.getElementById("discard-show")
+        let discardForm = document.getElementById("discard")
+        let cancel = document.getElementById("cancel")
+
         panel.addEventListener("click", ()=>{
             panelwrap.classList.toggle("show")
+        })
+
+        
+        discardShow.addEventListener("click", ()=>{
+            discardShow.style = "display: none"
+            discardForm.style = "display: block;"
+        })
+        cancel.addEventListener("click", ()=>{
+            discardShow.style = "display: block"
+            discardForm.style = "display: none"
         })
     </script>
 

@@ -1,0 +1,60 @@
+<%- include("./partials/_header", {loggedIn: loggedIn, user: user}) %>
+
+<div class="article-wrapper">
+  <div class="img-article">
+    <img src="<%= article.bannerPath %>" alt="">
+  </div>
+    <div class="article-head-dets">
+      <h1><%= article.title %></h1>
+      <div class="article-page-det">
+      <div class="timediv"><%= article.createdAt.toDateString() %></div> <div class="author"><%= article.author%></div>
+      </div>
+    </div>
+
+    <div class="article-page-body">
+      
+      <%- article.sanitizedContent %>
+      
+    </div>
+   <div class="interactions">
+        <div id="discard-show">
+            Discard
+        </div>
+        <form class="discard" id="discard" action="/discardpending/<%=article.id%>?_method=DELETE" method="post" style="display: none;">
+            <p>Are you sure you want to discard this article?</p>
+             <button>
+                 Discard
+             </button>
+             <div id="cancel">cancel</div>
+           </form>
+    <%if(user.isadmin === true){%>
+      <form class="like" id="like" action="/newArticle/<%= article.id %>" method="post">
+        <button id="">
+            Approve
+        </button>
+      </form>
+
+    <%}%>
+    <div class="share"></div>
+   </div>
+</div>
+
+
+  <script src="/js/mobilenav.js"></script>
+  <script>
+    let discardShow = document.getElementById("discard-show")
+    let discardForm = document.getElementById("discard")
+    let cancel = document.getElementById("cancel")
+
+
+    discardShow.addEventListener("click", ()=>{
+        discardShow.style = "display: none"
+        discardForm.style = "display: block;"
+    })
+    cancel.addEventListener("click", ()=>{
+            discardShow.style = "display: block"
+            discardForm.style = "display: none"
+    })
+  </script>
+ 
+<%- include("./partials/_footer") %>

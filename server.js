@@ -214,6 +214,24 @@ app.get("/updatearticle/:id", userAuthenticated, async (req, res)=>{
     res.render("updatearticle", {loggedIn: req.isAuthenticated() ? true : false, user: req.user, article: article, msg: ""})
 })
 
+//pending article page (get route)
+app.get("/pending/:id", userAuthenticated, async (req, res)=>{
+    try{
+      
+        let pendingarticle = await PendingArticle.findById(req.params.id)
+      
+        if(req.isAuthenticated()){
+       return res.render("pendingArticle", {article: pendingarticle, loggedIn: true, user: req.user})
+        }else{
+          res.render("pendingArticle", {article: pendingarticle, loggedIn: false, user: req.user})
+        }
+    
+    } catch{
+        
+        res.redirect("/")
+    }
+})
+
 // article page route
 app.get("/:id",  async (req, res)=>{
     try{
@@ -903,6 +921,12 @@ app.post("/like/:id", userAuthenticated, async(req, res)=>{
 
     res.json({like: like, likes: likes})
     //res.redirect(`/${req.params.id}`)
+})
+
+// delete pending post
+app.delete("discardpending/:id", userIsAdmin, async(req, res)=>{
+    await PendingArticle.findByIdAndDelete(req.params.id)
+    res.redirect("/admin/Panel")
 })
 //delete post
 app.delete("/:id", userIsAdmin, async (req,res)=>{
