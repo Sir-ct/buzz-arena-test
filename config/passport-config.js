@@ -6,6 +6,7 @@ const GoogleStrategy = require( 'passport-google-oauth20' ).Strategy;
 //user model
 const User = require("../models/usersmodel")
 const Guser = require("../models/gusersmodel")
+const sendmail = require("../server")
 
 
 function initialize(passport){
@@ -55,6 +56,14 @@ function initialize(passport){
                     mail: profile.emails[0].value,
                     profileImgPath: profile.photos[0].value
                 })
+
+                let regmail = `
+                <h2>Welcome</h2>
+                <p> You Are successfully registered on Buzz arena, go ahead and login with the link below<br>
+                    <a href="buzz-arena-test.herokuapp.com/login"> Login </a>
+                </p>
+            `
+                sendmail(req.body.email, "Welcome to the hood", regmail)
 
                  await user.save()
                  console.log(`user is not registered already regigistering now ${user}`)
