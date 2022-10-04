@@ -1,24 +1,26 @@
 <%- include("./partials/_header", {loggedIn: loggedIn, user: user}) %>
 
 <div class="article-wrapper">
-  <div class="img-article">
-    <img src="<%= article.bannerPath %>" alt="">
-  </div>
     <div class="article-head-dets">
       <h1><%= article.title %></h1>
+      <h2><%= article.description %></h2>
       <div class="article-page-det">
       <div class="timediv"><%= article.createdAt.toDateString() %></div> <div class="author"><%= article.author%></div>
       </div>
     </div>
 
+    <div class="img-article">
+      <img src="<%= article.bannerPath %>" alt="">
+    </div>
+
     <div class="article-page-body">
       
-      <%- article.sanitizedContent %>
+      <%- article.sanitizedContent.charAt(3).toUpperCase() + article.sanitizedContent.slice(4) %>
       
     </div>
    <div class="interactions">
     <%if(loggedIn == true){%>
-      <form class="like" id="like" action="/like/<%= article.id %>" method="post" >
+      <form class="like" id="like" action="/like/<%= article.id %>" method="post">
         <button id="likebtn">
          <% if(like != null){%>
           <ion-icon name="thumbs-up" class="like-img" id="likeicon"></ion-icon>
@@ -87,7 +89,7 @@
      <h2 class="popular-posts-header">Popular Posts</h2>
      <div class="popular-posts-cont">  
 
-       <% for(let i=0; i < popular.length; i++){%>
+       <% for(let i=0; i<6; i++){%>
          
         <div class="popular-posts">
           <div class="popular-post-img"><img src="<%= popular[i].bannerPath%>" alt=""></div>
@@ -126,7 +128,9 @@
             'Content-Type': 'application/json',
           }
         }).then((res)=> res.json()).then((data)=>{
-         console.log(data)
+         
+          
+
           if(data.like != null){
             likebtn.innerHTML = ` <ion-icon name="thumbs-up" class="like-img" id="likeicon"></ion-icon>`
           }else{
@@ -140,10 +144,10 @@
           }else{
             likecount.innerHTML = ""
           }
-        }).catch((error)=>{
-        console.log(error)
-      })
+        })
 
+      }).catcth((error)=>{
+        console.log(error)
       })
 
     } 
