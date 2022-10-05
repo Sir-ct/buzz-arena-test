@@ -325,7 +325,7 @@ app.post("/register", async (req, res)=>{
                     </p>
                 `
                 sendmail(req.body.email, "Welcome to the hood", regmail)
-                res.render("register", {loggedIn: false, user: req.user,errormsg: "congratulations! an email has been sent to your inbox" , feilds: ""})
+                res.redirect("emailsentpage")
             });
         });
     }
