@@ -120,13 +120,13 @@ img{
     .article-head-dets h1{
         font-size: 24px;
         text-transform: capitalize;
-        width: 80%;
+        width: 90%;
         margin: auto;
         text-align: left;
     }
     .article-head-dets h2{
         font-size: 13px;
-        width: 80%;
+        width: 90%;
         margin: 10px auto;
         text-align: left;
         color: rgb(146, 127, 127);
@@ -135,15 +135,15 @@ img{
         margin: 20px 10px;
     }
     .img-article{
-        width: 80%;
+        width: 90%;
         height: 30vh;
     }
     .article-page-body{
-        width: 80%;
-        font-size: 18px;
+        width: 90%;
+        font-size: 19px;
         margin: auto;
         margin-top: 10px;
-        line-height: 2;
+        line-height: 1.9;
     }
     .comment-wrap{
         padding: 10% 0;
