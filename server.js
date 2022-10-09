@@ -358,34 +358,35 @@ app.post("/logout", (req, res)=>{
     
 })
 //adding images inside article
-app.post("/inarticleimg", async (req, res)=>{
-    console.log(req.files)
+app.post("/inarticleimg", userAuthenticated, async (req, res)=>{
+    console.log("view files:",req.files['files[0]'])
    
-      let file = req.files.file
+       let file = req.files['files[0]']
        let date = new Date()
        let aimg = date.getDate() + date.getTime() + file.name
        let aimgdir = path.join(staticpath,  `/uploads/${aimg}`)
        file.mv(aimgdir, (err, results)=>{
-           console.log(results)
+           console.log("results:", results)
        })
    
    //configuring parameters
    var params = {
      Bucket: 'buzzarena-media-bucket',
      Body : fs.createReadStream(aimgdir),
-     Key : "folder/"+Date.now()+"_"+req.files.file.name
+     Key : "folder/"+Date.now()+"_"+file.name
    };
    
    s3.upload(params, function (err, data) {
      //handle error
      if (err) {
-       console.log("Error", err);
+       console.log("Error:", err);
+       return res.json({error: err.message})
      }
    
      //success
      if (data) {
        console.log("Uploaded in:", data.Location);
-       res.json({location: data.Location})
+       return res.json({path: data.Location})
      }
    });
    

@@ -27,10 +27,10 @@
        <div class="footer-links">
          <h3>Social Links</h3>
          <ul>
-          <li><a href="https://web.facebook.com/profile.php?id=100077481551238">facebook</a></li>
-          <li><a href="https://twitter.com/TheHood_R">twitter</a></li>
-          <li><a href="https://www.instagram.com/the_hood_remastered/">instagram</a></li>
-          <li><a href="#">Youtube</a></li>
+           <li>Instagram</li>
+           <li>Facebook</li>
+           <li>Youtube</li>
+           <li>Twitter</li>
            <li></li>
            <li></li>
          </ul>
@@ -54,7 +54,34 @@
     AOS.init();
   </script>
 
-  
+<script>
+	const editor = Jodit.make('#n-a-c',{
+    uploader:{
+      url: "/inarticleimg",
+        isSuccess: function (resp) {
+            return !resp.error;
+        },
+        process: function (resp) {
+            return {
+                path: resp.path,
+                error: resp.error
+            };
+        },
+        defaultHandlerSuccess: function (data, resp) {
+            var i,
+                field = 'files';
+                console.log("data:" + data +"and"+ "response:" + resp)
+            if (data.path) {
+              this.s.insertImage(data.path);
+            }
+        },
+        error: function (e) {
+            this.e.fire('errorMessage', [e.getMessage(), 'error', 4000]);
+        }
+    }
+  });
+</script>
+
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
