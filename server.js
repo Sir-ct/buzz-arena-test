@@ -925,7 +925,7 @@ app.post("/like/:id", userAuthenticated, async(req, res)=>{
 })
 
 // delete pending post
-app.delete("discardpending/:id", userIsAdmin, async(req, res)=>{
+app.delete("/discardpending/:id", userIsAdmin, async(req, res)=>{
     await PendingArticle.findByIdAndDelete(req.params.id)
     res.redirect("/admin/Panel")
 })
