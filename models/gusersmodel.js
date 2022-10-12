@@ -19,11 +19,11 @@ let guserschema = new mongoose.Schema({
     },
     isauthor:{
         type: Boolean,
-        default: false
+        default: true
     },
     isadmin:{
         type: Boolean,
-        default: true
+        default: false
     },
     issuperadmin: {
         type: Boolean,
