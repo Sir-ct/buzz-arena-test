@@ -325,7 +325,7 @@ app.post("/register", async (req, res)=>{
                     </p>
                 `
                 sendmail(req.body.email, "Welcome to the hood", regmail)
-                res.render("emailsentpage")
+                res.render("emailsentpage", {loggedIn: false})
             });
         });
     }
