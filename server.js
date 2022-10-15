@@ -404,7 +404,7 @@ app.post("/pendingArticle", userAuthenticated, async(req, res)=>{
        else{
         let file = req.files.bannerimage
         let date = new Date()
-        let banner = date.getDate() + date.getTime() + file.name
+        let banner = date.getDate() + date.getTime() + file.name.replace(" ", "-")
         let bannerdir = path.join(staticpath,  `/uploads/${banner}`)
         file.mv(bannerdir, (err, results)=>{
             console.log(results)
@@ -507,7 +507,9 @@ app.post("/newArticle/:id", userAuthenticated, async (req, res)=>{
             title: pending.title,
             description: pending.description,
             content: pending.content,
-            categories: pending.category,
+            categories:  pending.categories.map((item )=>{
+                return item
+            }),
             bannerPath: pending.bannerPath,
             views: 0,
             author: pending.author,
