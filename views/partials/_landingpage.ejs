@@ -56,7 +56,7 @@
         </div>
         <a href="/<%= articles[i].id%>"><div class="headone"> <%= articles[i].title.substring(0, 49)%> </div></a>
         <p class="guest-trending-grey"><%= articles[i].description %></p>
-        <div class="guest-date"><span>Jun 12</span> . <div class="guest-cat"> sports</div></div>
+        <div class="guest-date"><span>Jun 12</span> . <div class="guest-cat"> <%= articles[i].categories[0]%></div></div>
        </div>
        <div class="landing-page-banner">
         <img src="<%= articles[i].bannerPath%>" alt="">
